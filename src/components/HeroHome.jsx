@@ -4,13 +4,25 @@ import justAsk from '../images/justAsk.png'
 import recipe from '../images/recipe.png'
 import appStore from '../images/appStore.png'
 import playStore from '../images/playStore.png'
+import { motion } from "framer-motion";
 
 export default function HeroHome() {
     return (
         <section>
             <div className="max-w-6xl  mx-auto  px-4 sm:px-6">
                 <div className="pt-28 pb-10  md:pb-16 flex md:flex-row flex-col">
-                    <div className='md:flex-[60%] flex-col md:space-y-1 space-y-6'>
+                    <motion.div
+                        // className="md:-mt-20"
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{ duration: 0.5 }}
+                        variants={{
+                            hidden: { opacity: 0, x: -50 },
+                            visible: { opacity: 1, x: 0 },
+                        }}
+
+                        className='md:flex-[60%] flex-col md:space-y-1 space-y-6'>
                         <div>
                             <img src={bigTitle} className="w-auto h-auto p-4" alt="desc" />
                             <img src={justAsk} className="w-auto h-auto p-4" alt="desc" />
@@ -36,9 +48,21 @@ export default function HeroHome() {
                                  opacity-75 text-sm font-medium text-start">Join our mailing list for exclusive offers!</p>
                             </form>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className='md:flex-[40%]  md:h-auto
+                    <motion.div
+                        className="md:-mt-20"
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{ duration: 0.5 }}
+                        variants={{
+                            hidden: { opacity: 0, x: +50 },
+                            visible: { opacity: 1, x: 0 },
+                        }}
+
+
+                        className='md:flex-[40%]  md:h-auto
                      flex flex-col justify-center items-center order-2'>
                         <img src={recipe} className=" 
                           rounded-full  h-56 w-56 md:w-auto md:h-auto
@@ -58,10 +82,10 @@ export default function HeroHome() {
                             <div><img src={playStore} /></div>
                             <div><img src={appStore} /></div>
                         </div>
-                    </div>
+                    </motion.div>
 
                 </div>
             </div>
-        </section>
+        </section >
     )
 }

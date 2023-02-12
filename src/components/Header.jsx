@@ -55,7 +55,7 @@ function Header() {
   // }, [darkMode]);
 
   return (
-    <header className="absolute  opacity-90 bg-transparent shadow-xl w-full z-30">
+    <header className="fixed  opacity-90 bg-transparent shadow-xl w-full z-30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
           {/* Site branding */}
@@ -147,7 +147,7 @@ function Header() {
             {/* Desktop CTA on the right */}
             <ul className="flex justify-end flex-wrap items-center border-2 border-primary-600 px-8 rounded-md">
               <li>
-                <Link to="/login" className="btn-sm text-primary-600 ">
+                <Link to="/signin" className="btn-sm text-primary-600 ">
                   Login
                 </Link>
               </li>
