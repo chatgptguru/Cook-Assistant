@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { ColorRing } from "react-loader-spinner";
 // import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "./Header";
+import Header from "../components/Header";
 import homeImageBackground from "../images/homeBackground.png"
+import { motion } from "framer-motion";
 
 // import PageIllustration from "../partials/PageIllustration";
 // import { clearMessage } from "../redux/message";
@@ -11,12 +12,12 @@ import homeImageBackground from "../images/homeBackground.png"
 // import Notification from "./UI/Notification";
 
 const initialState = {
-  fullName: "",
+  NewConfirmPassword: "",
   email: "",
-  password: "",
+  ConfirmPassword: "",
 };
 
-function SignUp() {
+function RessetPasword() {
 
 
   const [values, setValues] = useState(initialState);
@@ -40,8 +41,8 @@ function SignUp() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const { email, password, fullName } = values;
-    // if (!email || !password) {
+    const { email, ConfirmPassword, NewConfirmPassword } = values;
+    // if (!email || !ConfirmPassword) {
     setIsVisible(true)
     // dispatch(registerUser(values)).then((res) => {
     //   isLoggedIn && navigate('/services')
@@ -69,18 +70,27 @@ function SignUp() {
         </div>
 
         <section className="relative">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.5 }}
+            variants={{
+              hidden: { opacity: 0, x: -50 },
+              visible: { opacity: 1, x: 0 },
+            }}
+            className=" mx-auto px-4 sm:px-6">
             <div className="pt-32 pb-12 md:pt-32 md:pb-20 flex justify-center items-center">
-              <div className="backdrop-filter backdrop-blur-sm shadow-xl py-5 opacity-90 md:w-[45%] w-full rounded-xl">
+              <div className="bg-white bg-opacity-25 shadow-xl py-5 opacity-90 md:w-[45%] w-full rounded-xl">
                 {/* Page header */}
                 <div className="max-w-3xl mx-auto text-center pb-12 md:pb-10">
-                  <h1 className="h3 text-gray-800">
-                    Welcome to <span className="text-orange-50">COOK-E</span>
+                  <h1 className="h3 text-gray-200">
+                    Create new Password
                   </h1>
                 </div>
 
                 {/* Form */}
-                <div className="max-w-sm mx-auto">
+                <div className="max-w-sm mx-auto py-5">
 
                   <form onSubmit={onSubmit}>
                     <div className="flex flex-wrap -mx-3 mb-4">
@@ -89,11 +99,11 @@ function SignUp() {
                           className="block text-gray-300 text-sm font-medium mb-1"
                           htmlFor="full-name"
                         >
-                          Full Name <span className="text-red-600">*</span>
+                          New Password <span className="text-red-600">*</span>
                         </label>
                         <input
-                          name="fullName"
-                          value={values.fullName}
+                          name="NewConfirmPassword"
+                          value={values.NewConfirmPassword}
                           onChange={handleChange}
                           type="text"
                           className="form-input w-full text-gray-300"
@@ -102,80 +112,36 @@ function SignUp() {
                         />
                       </div>
                     </div>
-                    {/* <div className="flex flex-wrap -mx-3 mb-4">
-                    <div className="w-full px-3">
-                      <label
-                        className="block text-gray-300 text-sm font-medium mb-1"
-                        htmlFor="company-name"
-                      >
-                        Company Name <span className="text-red-600">*</span>
-                      </label>
-                      <input
-                        id="company-name"
-                        type="text"
-                        className="form-input w-full text-gray-300"
-                        placeholder="Your company or app name"
-                        required
-                      />
-                    </div>
-                  </div> */}
+
+
                     <div className="flex flex-wrap -mx-3 mb-4">
                       <div className="w-full px-3">
                         <label
                           className="block text-gray-300 text-sm font-medium mb-1"
-                          htmlFor="email"
+                          htmlFor="ConfirmPassword"
                         >
-                          Work Email <span className="text-red-600">*</span>
+                          Confirm Password <span className="text-red-600">*</span>
                         </label>
                         <input
-                          type="email"
-                          name="email"
-                          value={values.email}
+                          type="ConfirmPassword"
+                          name="ConfirmPassword"
+                          value={values.ConfirmPassword}
                           onChange={handleChange}
                           className="form-input w-full text-gray-300"
-                          placeholder="you@yourcompany.com"
+                          placeholder="ConfirmPassword (at least 10 characters)"
                           required
                         />
                       </div>
                     </div>
-                    <div className="flex flex-wrap -mx-3 mb-4">
-                      <div className="w-full px-3">
-                        <label
-                          className="block text-gray-300 text-sm font-medium mb-1"
-                          htmlFor="password"
-                        >
-                          Password <span className="text-red-600">*</span>
-                        </label>
-                        <input
-                          type="password"
-                          name="password"
-                          value={values.password}
-                          onChange={handleChange}
-                          className="form-input w-full text-gray-300"
-                          placeholder="Password (at least 10 characters)"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="text-sm text-gray-500 text-center">
-                      I agree to be contacted by Bevinzey about this offer as per
-                      the Bevinzey{" "}
-                      <Link
-                        to="#"
-                        className="underline text-gray-400 hover:text-gray-200 hover:no-underline transition duration-150 ease-in-out"
-                      >
-                        Privacy Policy
-                      </Link>
-                      .
-                    </div>
+
                     <div className="flex flex-wrap -mx-3 mt-6">
                       <div className="w-full px-3">
-                        {/* <Link to="/services"> */}
-                        <button type="submit" className="btn text-white bg-gradient-to-r from-orange-100 to-orange-50 w-full">
+                        <Link to="/password-changed">
+                          <button type="submit" className="btn text-white bg-gradient-to-r from-orange-100 to-orange-50 w-full">
 
-                          Sign Up
-                        </button>
-                        {/* </Link> */}
+                            Reset Password
+                          </button>
+                        </Link>
                       </div>
                     </div>
                     {/* <p className="mt-8 mx-3 text-xs font-bold text-center text-gray-700">
@@ -189,16 +155,7 @@ function SignUp() {
                     )}
                   </p> */}
                   </form>
-                  <div className="text-gray-400 flex space-x-2 justify-center text-center mt-6">
-                    Already using Bevinzey?{" "}
-                    <div
-                      to="signin"
-                      onClick={() => navigate('/signin')}
-                      className="text-orange-600 ml-2 hover:text-gray-200 transition duration-150 ease-in-out"
-                    >
-                      Sign in
-                    </div>
-                  </div>
+
                 </div>
               </div>
               {visible &&
@@ -220,7 +177,7 @@ function SignUp() {
                 />
               )} */}
             </div>
-          </div>
+          </motion.div>
         </section>
 
       </main>
@@ -228,4 +185,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default RessetPasword;

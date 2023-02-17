@@ -56,7 +56,7 @@ function Header() {
 
   return (
     <header className="fixed  opacity-90 bg-transparent shadow-xl w-full z-30">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
           {/* Site branding */}
           <div className="shrink-0 mr-5">
@@ -91,7 +91,7 @@ function Header() {
             <ul className="flex  grow flex-wrap items-center font-medium">
               <li>
                 <Link
-                  to="/about"
+                  to="/discover-dishes"
                   className="text-white hover:text-primary-600 dark:text-gray-300 dark:hover:text-gray-100 px-5 py-2 flex items-center transition duration-150 ease-in-out"
                 >
                   Food Ideas
@@ -99,7 +99,7 @@ function Header() {
               </li>
               <li>
                 <Link
-                  to="/blog"
+                  to="/shop"
                   className="text-white hover:text-primary-600 dark:text-gray-300 dark:hover:text-gray-100 px-5 py-2 flex items-center transition duration-150 ease-in-out"
                 >
                   Shop
@@ -107,7 +107,7 @@ function Header() {
               </li>
               <li>
                 <Link
-                  to="/testimonials"
+                  to="/personal-cookbook"
                   className="text-white hover:text-primary-600 dark:text-gray-300 dark:hover:text-gray-100 px-5 py-2 flex items-center transition duration-150 ease-in-out"
                 >
                   Shopping Block
@@ -218,23 +218,23 @@ function Header() {
               <nav
                 id="mobile-nav"
                 ref={mobileNav}
-                className="fixed top-0 h-screen z-20 left-0 w-full  -ml-16   dark:bg-gray-900 shadow-lg no-scrollbar"
+                className="fixed top-0 h-screen z-0 left-0 w-full opacity-100  -ml-16   dark:bg-gray-900 shadow-lg no-scrollbar"
               >
                 {/* Background image */}
                 <div className="absolute inset-0 h-auto pt-16 box-content -z-1">
-                  <img className="absolute inset-0 w-full h-full object-cover " src={homeImageBackground} width="1440" height="577" alt="About" />
+                  <img className="absolute inset-0 opacity-100 w-full h-full object-cover " src={homeImageBackground} width="1440" height="577" alt="About" />
                   {/* <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-gray-900" aria-hidden="true"></div> */}
                 </div>
                 <div className="py-6  pl-[64px]">
                   {/* Logo */}
-                  <Link to="/" className="flex justify-center mb-4" aria-label="Cruip">
+                  <Link to="/" className="flex justify-center py-6 my-4" aria-label="Cruip">
                     <img src={logo} alt="logo" className="w-12 h-12" />
                   </Link>
                   {/* Links */}
                   <ul className='space-y-4'>
                     <li>
-                      <Link to="/about"
-                        className=" w-full flex backdrop-filter backdrop-blur-md justify-center text-center text-white
+                      <Link to="/discover-dishes"
+                        className=" w-full flex   bg-white shadow-xl  bg-clip-padding bg-opacity-25  justify-center text-center text-white
                        dark:text-gray-300 dark:hover:text-gray-100 py-3 
                        
                        ">
@@ -243,8 +243,8 @@ function Header() {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/about"
-                        className=" w-full flex backdrop-filter backdrop-blur-md justify-center text-center text-white
+                      <Link to="/shop"
+                        className=" w-full flex bg-white shadow-xl  bg-clip-padding bg-opacity-25  justify-center text-center text-white
                        dark:text-gray-300 dark:hover:text-gray-100 py-3
                        
                        ">
@@ -252,8 +252,8 @@ function Header() {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/about"
-                        className=" w-full flex backdrop-filter backdrop-blur-md justify-center text-center text-white
+                      <Link to="/personal-cookbook"
+                        className=" w-full flex bg-white shadow-xl  bg-clip-padding bg-opacity-25  justify-center text-center text-white
                        dark:text-gray-300 dark:hover:text-gray-100 py-3
                        
                        ">

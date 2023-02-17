@@ -46,7 +46,7 @@
 .form-select,
 .form-checkbox,
 .form-radio {
-    @apply bg-transparent border border-gray-700 focus:border-gray-500;
+    @apply bg-transparent border border-gray-700 focus: border-gray-500;
 } */
 
 .form-input,
@@ -54,7 +54,7 @@
 .form-multiselect,
 .form-select,
 .form-checkbox {
-    @apply rounded-full;
+    @apply rounded-sm;
 }
 
 .form-input,

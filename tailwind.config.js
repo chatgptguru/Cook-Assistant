@@ -57,18 +57,6 @@ module.exports = {
           800: '#34399B',
           900: '#1E2156',
         },
-        purple: {
-          50: '#FAF5FF',
-          100: '#F3E8FF',
-          200: '#E9D8FD',
-          300: '#D6BCFA',
-          400: '#B794F4',
-          500: '#9F7AEA',
-          600: '#805AD5',
-          700: '#6B46C1',
-          800: '#553C9A',
-          900: '#44337A',
-        },
         pink: {
           50: '#FFF5F7',
           100: '#FFEBEF',
@@ -139,6 +127,7 @@ module.exports = {
         '-10': '-10',
       },
     },
+    
   },
   plugins: [
     // eslint-disable-next-line global-require
