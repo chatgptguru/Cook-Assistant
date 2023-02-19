@@ -37,11 +37,11 @@ function DisheSingle() {
             <article>
 
               {/* Article content */}
-              <div className="text-lg pb-20   text-gray-400">
+              <div className="text-lg pb-20 text-gray-400">
 
 
                 <figure className="mb-8 flex justify-center">
-                  <img className=" md:h-96 h-auto w-full" src={recipeB} alt="News inner" />
+                  <img className="md:w-[80%] md:h-96 h-auto w-full" src={recipeB} alt="News inner" />
                   {/* <figcaption className="text-sm text-center text-gray-500 mt-3">Photo by Helena Lopes on Unsplash</figcaption> */}
                 </figure>
                 <h3 className="h3 mb-4 text-gray-200">Duck Confit with Garlic and Herbs: </h3>
@@ -72,7 +72,10 @@ function DisheSingle() {
                 <p className="mb-8">
                   Bibendum enim facilisis gravida neque convallis. Convallis posuere morbi leo urna molestie turpis in eu mi bibendum neque egestas. Est ante in <Link to="#" className="text-gray-200 underline hover:no-underline">nibh mauris cursus mattis molestie</Link> aliquam purus sit amet luctus vulputate sapien nec sagittis aliquam enim nec dui nunc mattis enim, sit amet nulla facilisi morbi tempus iaculis urna id. Blandit cursus risus at ultrices mi tempus imperdiet nulla.
                 </p>
-
+                <h3 className="h3 mb-4 text-gray-200">Conclusions</h3>
+                <p className="mb-8">
+                  Sapien nec sagittis aliquam malesuada orci sagittis eu volutpat odio facilisis mauris sit amet massa, consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo, purus viverra accumsan in nisl nisi scelerisque. Vel pharetra vel turpis nunc eget lorem malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit. Tempus quam pellentesque nec nam aliquam sem et tortor consequat.
+                </p>
               </div>
 
 

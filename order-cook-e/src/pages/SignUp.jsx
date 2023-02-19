@@ -80,12 +80,11 @@ function SignUp() {
               visible: { opacity: 1, x: 0 },
             }}
             className="max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="pt-32 pb-10 md:pt-40 md:pb-16 
-            flex justify-center items-center">
-              <div className="bg-white bg-opacity-10 shadow-xl py-5 opacity-90 md:w-[45%] w-full rounded-xl">
+            <div className="pt-32 pb-12 md:pt-32 md:pb-20 flex justify-center items-center">
+              <div className="backdrop-filter backdrop-blur-sm shadow-xl py-5 opacity-90 md:w-[45%] w-full rounded-xl">
                 {/* Page header */}
                 <div className="max-w-3xl mx-auto text-center pb-12 md:pb-10">
-                  <h1 className="h3 text-gray-200">
+                  <h1 className="h3 text-gray-800">
                     Welcome to <span className="text-orange-50">COOK-E</span>
                   </h1>
                 </div>
@@ -100,7 +99,7 @@ function SignUp() {
                           className="block text-gray-300 text-sm font-medium mb-1"
                           htmlFor="full-name"
                         >
-                          Name <span className="text-red-600">*</span>
+                          Full Name <span className="text-red-600">*</span>
                         </label>
                         <input
                           name="fullName"
@@ -108,7 +107,7 @@ function SignUp() {
                           onChange={handleChange}
                           type="text"
                           className="form-input w-full text-gray-300"
-                          placeholder="Your name"
+                          placeholder="First and last name"
                           required
                         />
                       </div>
@@ -120,7 +119,7 @@ function SignUp() {
                           className="block text-gray-300 text-sm font-medium mb-1"
                           htmlFor="email"
                         >
-                          Email <span className="text-red-600">*</span>
+                          Work Email <span className="text-red-600">*</span>
                         </label>
                         <input
                           type="email"
@@ -128,7 +127,7 @@ function SignUp() {
                           value={values.email}
                           onChange={handleChange}
                           className="form-input w-full text-gray-300"
-                          placeholder="you@email.com"
+                          placeholder="you@yourcompany.com"
                           required
                         />
                       </div>
@@ -147,7 +146,7 @@ function SignUp() {
                           value={values.password}
                           onChange={handleChange}
                           className="form-input w-full text-gray-300"
-                          placeholder="Password (at least 8 characters)"
+                          placeholder="Password (at least 10 characters)"
                           required
                         />
                       </div>

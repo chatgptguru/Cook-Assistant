@@ -52,11 +52,11 @@ export default function DishesPage() {
 
             </article>
 
-            <div className='fixed 
-             flex  md:flex-row flex-col md:space-x-6  md:mx-2
+            <div className='fixed
+             flex md:space-x-3 md:flex-row flex-col  md:mx-2
               md:w-full w-[90%] mx-[5%]
                   z-90 bottom-10 '>
-              <div className='flex justify-center items-center space-x-6 '>
+              <div className='flex justify-center items-center space-x-2 '>
                 <button
                   onClick={() => navigate('/dishe-details')}
                   className="bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
@@ -75,13 +75,12 @@ export default function DishesPage() {
                   Dish2
                 </button>
               </div>
-              <div className='flex space-x-6  justify-center items-center '>
+              <div className='flex space-x-2  justify-center items-center '>
                 <button
                   onClick={() => navigate('/dishe-details')}
-                  className="
-                  bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
-                    font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
-                     my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
+                  className="bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
+              font-medium  flex items-center justify-center border brder-transparent w-40 p-2.5
+               my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
                 >
                   Dishe3
                 </button>

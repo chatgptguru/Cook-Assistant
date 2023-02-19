@@ -110,15 +110,7 @@ function Header() {
                   to="/personal-cookbook"
                   className="text-white hover:text-primary-600 dark:text-gray-300 dark:hover:text-gray-100 px-5 py-2 flex items-center transition duration-150 ease-in-out"
                 >
-                  Chopping Block
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/personal-cookbook"
-                  className="text-white hover:text-primary-600 dark:text-gray-300 dark:hover:text-gray-100 px-5 py-2 flex items-center transition duration-150 ease-in-out"
-                >
-                  CookBook
+                  Shopping Block
                 </Link>
               </li>
               {/* 1st level: hover */}
@@ -265,16 +257,7 @@ function Header() {
                        dark:text-gray-300 dark:hover:text-gray-100 py-3
                        
                        ">
-                        Chopping Block
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/personal-cookbook"
-                        className=" w-full flex bg-white shadow-xl  bg-clip-padding bg-opacity-25  justify-center text-center text-white
-                       dark:text-gray-300 dark:hover:text-gray-100 py-3
-                       
-                       ">
-                        CookBook
+                        Shopping Block
                       </Link>
                     </li>
                     {/* <li className="py-2 my-2 border-t border-b border-gray-200 dark:border-gray-800">

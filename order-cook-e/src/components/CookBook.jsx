@@ -53,25 +53,25 @@ export default function CookBook() {
                             </div>
                             <div className="md:w-[90%] md:mx-[5%] flex w-full md:flex-row flex-col pt-4 justify-start items-start space-x-0 space-y-3 md:space-y-0 md:space-x-2 lg:w-9/12   ">
                                 {/* Left Side */}
-                                <div className='flex-[30%]  w-full h-96 justify-start items-start  flex-row md:space-x-0 space-x-2 bg-white bg-opacity-30 rounded-xl'>
-                                    <div className='flex md:flex-col items-center justify-center'>  <button
+                                <div className='flex-[30%] flex md:flex-col w-full justify-center items-center  flex-row md:space-x-0 space-x-2 bg-white bg-opacity-30 rounded-xl'>
+                                    <button
 
                                         className="rounded-full w-52
             bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
             font-medium  flex items-center justify-center border border-transparent px-14 py-2.5
              my-2  text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
                                     >
-                                        Create List
+                                        Get Started!
                                     </button>
-                                        <button
+                                    <button
 
-                                            className="w-52
+                                        className="w-52
                md:mx-0 bg-clip-padding bg-opacity-25 bg-white
             font-medium  flex items-center justify-center border border-transparent px-14 py-2.5
              my-2 rounded-full text-gray-800  transition duration-150 ease-in-out"
-                                        >
-                                            List name
-                                        </button></div>
+                                    >
+                                        List name
+                                    </button>
                                 </div>
                                 {/* Right Side */}
                                 <div className='flex-[70%] '>

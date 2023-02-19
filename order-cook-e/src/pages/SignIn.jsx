@@ -64,7 +64,7 @@ function SignIn() {
             className="max-w-7xl mx-auto px-4 sm:px-6 ">
             <div className="pt-32 pb-12 md:pt-40  md:pb-20 flex justify-center items-center">
 
-              <div className="bg-white bg-opacity-10 shadow-xl py-5 opacity-90 md:w-[45%] w-full rounded-xl">
+              <div className="bg-white bg-opacity-25 shadow-xl py-5 opacity-90 md:w-[45%] w-full rounded-xl">
                 {/* Page header */}
                 <div className="max-w-3xl mx-auto text-center pb-12 md:pb-10">
                   <h1 className="h3  text-gray-200">
@@ -126,7 +126,7 @@ function SignIn() {
                         </label> */}
                           <Link
                             to="/reset-password"
-                            className="text-orange-500 font-bold hover:text-gray-200 transition duration-150 ease-in-out"
+                            className="text-orange-600 hover:text-gray-200 transition duration-150 ease-in-out"
                           >
                             Forgot Password?
                           </Link>
@@ -151,7 +151,7 @@ function SignIn() {
                     Don’t you have an account?{" "}
                     <Link
                       to="/signup"
-                      className="text-orange-500 font-bold hover:text-gray-200 transition duration-150 ease-in-out"
+                      className="text-orange-600 hover:text-gray-200 transition duration-150 ease-in-out"
                     >
                       Sign up
                     </Link>

@@ -148,7 +148,7 @@ function PricingTables() {
                       <MdDone className='text-green-600 text-xl' />
                     </div>
 
-                    <span>25 Full Recipe Downloads Per Month</span>
+                    <span>10 Full Recipe Downloads Per Month</span>
                   </li>
                   <li className="flex items-center  mb-3">
 
@@ -209,7 +209,7 @@ function PricingTables() {
                       <MdDone className='text-green-600 text-xl' />
                     </div>
 
-                    <span>50 Full Recipe Downloads Per Month</span>
+                    <span>10 Full Recipe Downloads Per Month</span>
                   </li>
                   <li className="flex items-center  mb-3">
 

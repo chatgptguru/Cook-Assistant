@@ -13,7 +13,7 @@ export default function HeroHome() {
     return (
         <section className="relative min-h-screen ">
             <div className=" mx-0 px-4 sm:px-6">
-                <div className="pt-32 pb-10 md:pt-40 md:pb-16">
+                <div className="pt-24 pb-12 md:pt-28 md:pb-20">
                     <div className="max-w-7xl mx-auto">
 
                         {/* Background image */}
