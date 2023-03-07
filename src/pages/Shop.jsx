@@ -5,7 +5,7 @@ import homeImageBackground from "../images/homeBackground.png"
 
 export default function Shop() {
     return (
-        <div className="flex flex-col relative  overflow-hidden">
+        <div className="flex flex-col relative min-h-screen  overflow-hidden">
 
             {/* Background image */}
 

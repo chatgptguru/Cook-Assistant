@@ -6,7 +6,7 @@ import Header from '../components/Header'
 
 export default function PersonalCookbook() {
     return (
-        <div className="flex flex-col overflow-hidden bg-hero-pattern">
+        <div className="flex flex-col  overflow-hidden bg-hero-pattern">
 
 
             <Header />

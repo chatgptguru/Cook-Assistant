@@ -7,6 +7,7 @@ import playStore from '../images/playStore.png'
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom'
 import homeImageBackground from "../images/homeBackground.png"
+import GenerateRecipe from './open-ai/GenerateRecipe'
 
 export default function HeroHome() {
     const navigate = useNavigate()
@@ -22,7 +23,9 @@ export default function HeroHome() {
                             <div className="absolute inset-0 bg-gradient-to-t  from-gray-700 dark:from-gray-900" aria-hidden="true"></div>
                         </div>
 
-                        <div className=" flex md:flex-row flex-col">
+
+
+                        <div className=" flex lg:flex-row flex-col">
                             <motion.div
                                 // className="md:-mt-20"
                                 initial="hidden"
@@ -34,14 +37,14 @@ export default function HeroHome() {
                                     visible: { opacity: 1, x: 0 },
                                 }}
 
-                                className='md:flex-[60%] flex-col md:space-y-1 space-y-6'>
-                                <div>
+                                className='md:flex-[60%] flex-col md:space-y-6 space-y-6'>
+                                <div className='md:space-y-6'>
                                     <img src={bigTitle} className="w-auto h-auto p-4" alt="desc" />
                                     <img src={justAsk} className="w-auto h-auto p-4" alt="desc" />
                                     <button
                                         onClick={() => navigate('/signin')}
                                         className="
-                            bg-gradient-to-r from-orange-100 to-orange-50 md:ml-[3%] mx-[5%] md:mx-0 w-[90%] md:w-[40%]
+                            bg-gradient-to-r from-orange-100 to-orange-50 md:ml-[3%] mx-[5%] md:mx-0 w-[90%] lg:w-[40%]
                             font-medium  flex items-center justify-center border border-transparent px-14 py-2.5
                              my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
                                     >
@@ -50,7 +53,7 @@ export default function HeroHome() {
                                 </div>
                                 <div>
 
-                                    <form className="w-2/3  lg:w-1/2 ml-[3.5%] md:mt-28 hidden md:block">
+                                    <form className="w-2/3  lg:w-1/2 ml-[3.5%] md:mt-28 hidden lg:block">
                                         <div className="flex justify-center  ">
                                             <input type="tel" className=" w-full h-full  pl-4 rounded-l-full  py-3" placeholder="Email" aria-label="Phone number" />
                                             <button className="text-white bg-gradient-to-r from-orange-100 to-orange-50
@@ -58,7 +61,7 @@ export default function HeroHome() {
                                         </div>
                                         {/* Success message */}
                                         <p className=" text-white lg:text-left lg:absolute mt-2
-                                 opacity-75 text-sm font-medium text-start">Join our mailing list for exclusive offers!</p>
+                                 opacity-75 text-sm font-medium ml-3 text-start">Join our mailing list for exclusive offers!</p>
                                     </form>
                                 </div>
                             </motion.div>
@@ -81,7 +84,7 @@ export default function HeroHome() {
                           rounded-full  h-56 w-56 md:w-auto md:h-auto
                          px-10 py-2 
                          " />
-                                <form className="w-[90%] mx-[5%]  lg:w-1/2  md:mt-28 block md:hidden">
+                                <form className="w-[90%] mx-[5%]  lg:w-1/2  lg:mt-28 block lg:hidden">
                                     <div className="flex justify-center  ">
                                         <input type="tel" className="form-input w-full h-full  pl-4 rounded-l-full  py-2.5" placeholder="Email" aria-label="Phone number" />
                                         <button className="text-white bg-gradient-to-r from-orange-100 to-orange-50
@@ -91,7 +94,7 @@ export default function HeroHome() {
                                     <p className=" text-white lg:text-left lg:absolute mt-2
                                  opacity-75 text-sm font-medium text-start">Join our mailing list for exclusive offers!</p>
                                 </form>
-                                <div className='flex space-x-4 mt-6 justify-center items-center'>
+                                <div className='flex space-x-4 mt-6 md:mt-20 justify-center items-center'>
                                     <div><img src={playStore} /></div>
                                     <div><img src={appStore} /></div>
                                 </div>

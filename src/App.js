@@ -17,23 +17,39 @@ import DiscoverDishes from "./pages/DiscoverDishes";
 import PersonalCookbook from "./pages/PersonalCookbook";
 import GetDishesPage from "./pages/GetDishesPage";
 import DisheDetails from "./pages/DisheDetails";
+import ChoppingBlock from "./pages/Chopping Block";
+import { Provider, useSelector } from "react-redux";
+import { store } from "./redux/store";
+import { getAuth } from "firebase/auth";
+import CBkDisheDetails from "./components/CBkDisheDetails";
+import GetRecipe from "./pages/GetRecipe";
 
 function App() {
+  
+  const auth = getAuth();
+  const user = auth.currentUser;
+  console.log("user : " + JSON.stringify(user))
+  console.log("user id : " + user?.uid)
+
+  const {isLoggedIn} = useSelector((state)=> state.auth)
+
   return (
     <>
     <Routes>
        <Route exact path="/" element={<Home />} />
-       <Route exact path="/signin" element={<SignIn />} />
-       <Route exact path="/signup" element={<SignUp />} />
+       <Route exact path="/signin" element={isLoggedIn ? <Home /> : <SignIn />} />
+       <Route exact path="/signup" element={isLoggedIn ? <Home /> : <SignUp />} />
        <Route path="/reset-password" element={<ResetPassword />} />
        <Route path="/change-password" element={<RessetPasword />} />
        <Route path="/verify-email" element={<VerifyEmail />} />
        <Route path="/password-changed" element={<PasswordChanged />} />
        <Route path="/shop" element={<Shop />} />
-       <Route path="/discover-dishes" element={<DiscoverDishes />} />
-       <Route path="/personal-cookbook" element={<PersonalCookbook />} />
-       <Route path="/get-dishes" element={<GetDishesPage />} />
-       <Route path="/dishe-details" element={<DisheDetails />} />
+       <Route path="/discover-dishes" element={isLoggedIn ? <DiscoverDishes /> : <SignIn />} />
+       <Route path="/personal-cookbook" element={isLoggedIn ?<PersonalCookbook /> : <SignIn />} />
+       <Route path="/get-dishes" element={isLoggedIn ?<GetDishesPage /> : <SignIn />} />
+       <Route path="/dishe-details" element={isLoggedIn ?<DisheDetails /> : <SignIn />} />
+       <Route path="/get-recipe" element={isLoggedIn ?<GetRecipe /> : <SignIn />} />
+       <Route path="/chopping-block" element={isLoggedIn ? <ChoppingBlock /> : <SignIn />} />
        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>

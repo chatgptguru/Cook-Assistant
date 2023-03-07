@@ -10,38 +10,34 @@ function PricingTables() {
   const [priceOutput] = useState({
     plan1: {
       false: ['$', '10', '/mo'],
-      true: ['$', '30', '/mo']
+      true: ['$', '8', '/mo']
     },
     plan2: {
       false: ['$', '20', '/mo'],
-      true: ['$', '50', '/mo']
+      true: ['$', '16', '/mo']
     },
     plan3: {
       false: ['$', '30', '/mo'],
-      true: ['$', '70', '/mo']
+      true: ['$', '24', '/mo']
     }
   });
 
   return (
-    <section className="relative min-h-screen ">
+    <section className="relative  ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
-          <div className="absolute h-auto inset-0  pt-16 object-cover box-content -z-1">
-            <img className="absolute inset-0 w-full sm:h-[1200px] md:h-[900px] h-[2000px] object-cover " src={homeImageBackground} width="1440" height="2000" alt="About" />
-            {/* <div className="absolute inset-0 bg-gradient-to-t  from-gray-500 dark:from-gray-900" aria-hidden="true"></div> */}
+          <div className="absolute h-auto inset-0  pt-16 box-content -z-1">
+            <img className="absolute inset-0 w-full h-full object-cover " src={homeImageBackground} width="1440" height="577" alt="About" />
+            <div className="absolute inset-0 bg-gradient-to-t  from-gray-700 dark:from-gray-900" aria-hidden="true"></div>
           </div>
-          {/* Section header */}
-          {/* <div className="max-w-3xl mx-auto text-center pb-12">
-            <h1 className="h1 mb-4" data-aos="fade-up">Simple, transparent pricing</h1>
-            <p className="text-xl text-gray-200" data-aos="fade-up" data-aos-delay="200">Get the Robotizia plan that fits your needs at a special introductory price.</p>
-          </div> */}
+
 
           {/* Pricing tables */}
           <div>
 
 
             {/* Pricing toggle */}
-            <div className="flex justify-center mb-12" data-aos="fade-up" data-aos-delay="400">
+            <div className="flex justify-center " data-aos="fade-up" data-aos-delay="400">
               <div className="inline-flex items-center">
                 <div className="text-primary-600 font-medium mr-3">Billed Monthly</div>
                 <div className="form-switch">
@@ -54,10 +50,10 @@ function PricingTables() {
                 <div className="text-primary-600 font-medium ml-3">Billed Annually</div>
               </div>
             </div>
-            <div className="max-w-sm rounded-md mx-auto grid gap-8 lg:grid-cols-3 lg:gap-6 items-start lg:max-w-none">
+            <div className=" pt-6  rounded-md  mx-auto grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-6 items-start lg:max-w-none">
 
               {/* Pricing table 1 */}
-              <div className="relative flex flex-col h-full p-6 rounded-md backdrop-filter backdrop-blur-xl shadow-xl" data-aos="fade-up" data-aos-delay="700">
+              <div className="relative flex flex-col h-full p-6 rounded-xl backdrop-filter backdrop-blur-xl shadow-xl" data-aos="fade-up" data-aos-delay="700">
                 <div className="mb-4 pb-4 border-b border-white">
                   <div className="h4 text-orange-50 mb-1">Basic Membership</div>
                   <div className="inline-flex items-baseline mb-2">
@@ -113,12 +109,12 @@ function PricingTables() {
 
                 </ul>
                 <div className=" p-3 mt-6">
-                  <a className="btn-sm text-white bg-orange-50 hover:bg-orange-50 w-full" href="#0">Start free trial</a>
+                  <a className="btn-sm text-white bg-orange-50 hover:bg-orange-50 w-full" href="#0">Get Started Now</a>
                 </div>
               </div>
 
               {/* Pricing table 2 */}
-              <div className="relative flex flex-col h-full p-6 rounded-md backdrop-filter backdrop-blur-xl shadow-xl" data-aos="fade-up" data-aos-delay="600">
+              <div className="relative flex flex-col h-full p-6 rounded-xl backdrop-filter backdrop-blur-xl shadow-xl" data-aos="fade-up" data-aos-delay="600">
                 {/* <div className="">
                   <div className=" text-gray-300  rounded-full">Choose a plan that’s right for you</div>
                 </div> */}
@@ -179,12 +175,12 @@ function PricingTables() {
 
                 </ul>
                 <div className=" p-3 mt-6">
-                  <a className="btn-sm text-white bg-orange-50 hover:bg-orange-50 w-full" href="#0">Start free trial</a>
+                  <a className="btn-sm text-white bg-orange-50 hover:bg-orange-50 w-full" href="#0">Get Started Now</a>
                 </div>
               </div>
 
               {/* Pricing table 3 */}
-              <div className="relative flex flex-col h-full p-6 rounded-md backdrop-filter backdrop-blur-xl shadow-xl" data-aos="fade-up" data-aos-delay="800">
+              <div className="relative flex flex-col h-full p-6 rounded-xl backdrop-filter backdrop-blur-xl shadow-xl" data-aos="fade-up" data-aos-delay="800">
                 <div className="mb-4 pb-4 border-b border-orange-50">
                   <div className="h4 text-orange-50 mb-1">Advanced</div>
                   <div className="inline-flex items-baseline mb-2">
@@ -241,7 +237,49 @@ function PricingTables() {
 
                 </ul>
                 <div className=" p-3 mt-6">
-                  <a className="btn-sm text-white bg-orange-50 hover:bg-orange-50 w-full" href="#0">Start free trial</a>
+                  <a className="btn-sm text-white bg-orange-50 hover:bg-orange-50 w-full" href="#0">Get Started Now</a>
+                </div>
+              </div>
+              {/* Pricing table 4 */}
+              <div className="relative flex flex-col h-full p-6 rounded-xl backdrop-filter backdrop-blur-xl shadow-xl" data-aos="fade-up" data-aos-delay="800">
+                <div className="mb-4 pb-4 border-b border-orange-50">
+                  <div className="h4 text-orange-50 mb-1">A La Carte</div>
+                  <div className="inline-flex items-baseline mb-2">
+                    <span className="text-2xl md:text-3xl font-medium text-gray-200">{priceOutput.plan3[value][0]}</span>
+                    <span className="h2 text-orange-50">5</span>
+                    <span className="font-medium text-gray-200">/mo</span>
+                  </div>
+                  <div className="text-gray-200">Ideal for individuals or businesses who want to explore, create and frequently share their recipes.  </div>
+                </div>
+                <ul className="text-gray-200 -mb-3 grow">
+
+                  <li className="flex items-center  mb-3">
+
+                    <div className='border-2 bg-[#B5EEB3] border-green-600 rounded-full mr-2 '>
+                      <MdDone className='text-green-600 text-xl' />
+                    </div>
+
+                    <span>10 Full Recipe Downloads</span>
+
+
+
+
+                  </li>
+                  <li className="flex items-center  mb-3">
+
+                    <div className='border-2 bg-[#B5EEB3] border-green-600 rounded-full mr-2 '>
+                      <MdDone className='text-green-600 text-xl' />
+                    </div>
+
+                    <span>Requires Active Membership</span>
+
+
+
+
+                  </li>
+                </ul>
+                <div className=" p-3 mt-6">
+                  <a className="btn-sm text-white bg-orange-50 hover:bg-orange-50 w-full" href="#0">Purchase</a>
                 </div>
               </div>
 

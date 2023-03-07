@@ -6,10 +6,23 @@ import logo from '../images/logo.png'
 import cookE from '../images/COOK-E.png'
 
 import homeImageBackground from "../images/homeBackground.png"
+import { getAuth, signOut } from 'firebase/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { switchLoginStatus } from '../redux/auth';
 
 function Header() {
 
+  const auth = getAuth();
+  const user = auth.currentUser;
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const { isLoggedIn } = useSelector((state) => state.auth)
+
+  const dispatch = useDispatch()
+  const logout = () => {
+    // await signOut(auth);
+    dispatch(switchLoginStatus(false))
+  };
 
   const trigger = useRef(null);
   const mobileNav = useRef(null);
@@ -55,9 +68,13 @@ function Header() {
   // }, [darkMode]);
 
   return (
-    <header className="fixed  opacity-90 bg-transparent shadow-xl w-full z-30">
+    <header className=" shadow-xl shadow-gray-500 fixed  opacity-90   w-full z-30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
+          <div className="absolute h-auto inset-0  pt-16  box-content -z-1">
+            <img className="absolute inset-0 w-full h-full object-cover " src={homeImageBackground} width="1440" height="577" alt="About" />
+            {/* <div className="absolute inset-0 opacity-25   from-gray-400" aria-hidden="true"></div> */}
+          </div>
           {/* Site branding */}
           <div className="shrink-0 mr-5">
             {/* Logo */}
@@ -107,7 +124,7 @@ function Header() {
               </li>
               <li>
                 <Link
-                  to="/personal-cookbook"
+                  to="/chopping-block"
                   className="text-white hover:text-primary-600 dark:text-gray-300 dark:hover:text-gray-100 px-5 py-2 flex items-center transition duration-150 ease-in-out"
                 >
                   Chopping Block
@@ -153,13 +170,24 @@ function Header() {
             </div> */}
 
             {/* Desktop CTA on the right */}
-            <ul className="flex justify-end flex-wrap items-center border-2 border-primary-600 px-8 rounded-md">
-              <li>
-                <Link to="/signin" className="btn-sm text-primary-600 ">
-                  Login
-                </Link>
-              </li>
-            </ul>
+            {!isLoggedIn
+              ? <ul className="flex justify-end flex-wrap items-center border-2 border-primary-600 px-8 rounded-md">
+                <li>
+                  <Link to="/signin" className="btn-sm text-primary-600 ">
+                    Login
+                  </Link>
+                </li>
+              </ul>
+              :
+              <ul onClick={logout} className="flex justify-end flex-wrap items-center border-2 border-primary-600 px-8 rounded-md">
+                <li>
+                  <Link to="/" className="btn-sm text-primary-600 ">
+                    Log Out
+                  </Link>
+                </li>
+              </ul>
+
+            }
           </nav>
 
           {/* Mobile menu */}

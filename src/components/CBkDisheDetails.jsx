@@ -6,17 +6,17 @@ import Swal from 'sweetalert';
 import homeImageBackground from "../images/homeBackground.png"
 import recipeC from '../images/recipeC.png'
 import GenerateImageRecipe from './open-ai/GenerateImageRecipe';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import GenerateInstructions from './open-ai/GenerateInstructions';
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { db, auth, firestoredDB } from "../config/firebase";
-import parse from 'html-react-parser'
-import { Scrollbars } from 'react-custom-scrollbars';
+import GenerateRecipe from './open-ai/GenerateRecipe';
+import { Configuration, OpenAIApi } from "openai";
+import { setRecipe1 } from '../redux/recipes';
 
-function DisheSingle() {
+function CBkDisheDetails() {
 
   const navigate = useNavigate()
-
 
   const moviesCollectionRef = collection(firestoredDB, "CookBook");
 
@@ -26,9 +26,8 @@ function DisheSingle() {
   const { prompt } = useSelector((state) => state.prompt)
   const { ingredients } = useSelector((state) => state.ingredients)
 
-  const ingredientsAndInstructions = `Write a recipe ingredients and instructions for this recipe ${recipe1}: \r\n  using ${ingredients.IncludedIngredients} with h2 html tag for each instructions and ingredients`
+  const ingredientsAndInstructions = `Write a recipe based on these ingredients and instructions: \r\n 1-${ingredients.IncludedIngredients}`
 
-  // const ingredientsAndInstructions = `Pleae provide ingredients for this recipe ${recipe1}, put ingredients title in h2 tag and ingredients in list html tag,also Please provide instructions for this recipe ${recipe1}, put instructions title in h2 tag and instructions in list html tag, `
   // Add a new document in collection "cities"
   const onSubmitRecipe = async () => {
     try {
@@ -36,9 +35,7 @@ function DisheSingle() {
         userId: auth?.currentUser?.uid,
         description: recipe1 || null,
         ingredients: ingredients || null,
-        imageUrl: image || null,
-        title: "",
-        listId: ""
+        imageUrl: image || null
 
       });
 
@@ -81,10 +78,50 @@ function DisheSingle() {
   //   onSubmitRecipe()
   // }, [])
 
+  const [result, setResult] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [placeholder, setPlaceholder] = useState(
+    "Search Bears with Paint Brushes the Starry Night, painted by Vincent Van Gogh.."
+  );
+
+
+  // import.meta.env.VITE_Open_AI_Key
+  const configuration = new Configuration({
+    apiKey: "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",
+  });
+
+  const openai = new OpenAIApi(configuration);
+
+  const dispatch = useDispatch()
+
+  const text = "Write 3 dishes in the format : name of the dish with number and the discription of each dishe based on these ingredients : Ingredients:  Fritos, Chili, Shredded cheddar cheese, Sweet white or red onions, diced small Sour cream"
+
+  const generateRecipe = async () => {
+    setLoading(true)
+    const response = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: prompt,
+      temperature: 0.3,
+      max_tokens: 120,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0
+    });
+    // console.log(JSON.stringify(response.data.data))
+    // console.log(result)
+    setLoading(false)
+    // setResult(response.data.choices)
+    dispatch(setRecipe1(response.data.choices[0].text));
+  };
+
+  useEffect(() => {
+    generateRecipe()
+  }, [])
+
   return (
-    <section className="relative  ">
+    <section className="relative ">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="pt-32 pb-12 md:pt-32 md:pb-40">
+        <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           <div className="max-w-3xl mx-auto">
             {/* Background image */}
             <div className="absolute h-auto inset-0  pt-16 box-content -z-1">
@@ -92,35 +129,65 @@ function DisheSingle() {
               {/* <div className="absolute inset-0 bg-gradient-to-t  from-gray-700 dark:from-gray-900" aria-hidden="true"></div> */}
             </div>
 
-            {/* <Scrollbars autoHeight
-              autoHeightMax={400}> */}
+            <article>
 
-            {/* Article content */}
-            <div className="text-lg pb-20   text-gray-400">
+              {/* Article content */}
+              <div className="text-lg pb-20   text-gray-400">
 
-              <figure className=" flex justify-center">
-                {/* <img className="  h-auto w-full" src={recipeB} alt="News inner" /> */}
-                <GenerateImageRecipe prompt={prompt} />
-                {/* <figcaption className="text-sm text-center text-gray-500 mt-3">Photo by Helena Lopes on Unsplash</figcaption> */}
-              </figure>
-              {/* <h3 className="h3 mb-4 text-gray-200">Duck Confit with Garlic and Herbs: </h3> */}
+                <figure className=" flex justify-center">
+                  {/* <img className="  h-auto w-full" src={recipeB} alt="News inner" /> */}
+                  <GenerateImageRecipe prompt={prompt} />
+                  {/* <figcaption className="text-sm text-center text-gray-500 mt-3">Photo by Helena Lopes on Unsplash</figcaption> */}
+                </figure>
+                {/* <h3 className="h3 mb-4 text-gray-200">Duck Confit with Garlic and Herbs: </h3> */}
+                <p className="mb-8 text-gray-200" >
+                  {/* This dish features tender and flavorful duck legs that are slow-cooked in their own fat, served with a side of garlic and herb mashed potatoes. Duck confit is a traditional French dish that is perfect for a hearty and satisfying meal. */}
 
-              <div className='bg-white cursor-pointer bg-opacity-20 text-white my-2 transition duration-150 hover:scale-105 p-2 rounded-2xl'>
-                {/* This dish features tender and flavorful duck legs that are slow-cooked in their own fat, served with a side of garlic and herb mashed potatoes. Duck confit is a traditional French dish that is perfect for a hearty and satisfying meal. */}
+                  {/* <GenerateRecipe prompt={prompt} /> */}
+                  {loading ?
+                    <>
+                      <h2>Generating..Please Wait..</h2>
+                    </>
+                    :
+                    <>
 
-                {parse(recipe1)}
+                      <div className='bg-white cursor-pointer bg-opacity-20 my-2 transition duration-150 hover:scale-105 p-2 rounded-2xl'>
+                        <h4 className="h5 text-gray-200 mb-4 font-bold"></h4>
+                        {/* <p className="mb-8 text-gray-200">
+                            {result.length > 0 && recipes}
+                        </p> */}
+                        <p className="mb-8 text-gray-200">
+                          {recipe1}
+                        </p>
+
+                      </div>
+
+
+                    </>
+                  }
+                </p>
+                <h4 className="font-medium text-primary-600 mb-8">Ingredients  & Cooking Directions:</h4>
+                <GenerateInstructions prompt={ingredientsAndInstructions} />
+                {/* <ul className="list-disc list-inside mb-8">
+                  <li>Aenean sed adipiscing diam donec adipiscing tristique.</li>
+                  <li>Urna nunc id cursus metus aliquam eleifend.</li>
+                  <li>Arcu dictum varius duis at consectetur lorem donec massa sapien.</li>
+                  <li>Sed risus ultricies tristique nulla aliquet.</li>
+                </ul>
+
+
+                <h4 className="h4 text-gray-200 mb-4">2. The quick brown fox jumped over the lazy dog.</h4>
+                <p className="mb-8">
+                  Sed risus ultricies tristique nulla aliquet morbi tristique senectus et netus et. Nibh nisl condimentum, id venenatis a condimentum vitae sapien.
+                </p> */}
+
+
               </div>
-              <h4 className="font-medium text-primary-600 mb-8">Ingredients  & Cooking Directions:</h4>
-              <GenerateInstructions prompt={ingredientsAndInstructions} />
 
 
+            </article>
 
-            </div>
-
-
-            {/* </Scrollbars> */}
-
-            <div className='fixed flex md:space-x-3 md:flex-row flex-col   md:mx-2  md:w-full w-[90%] mx-[5%] bottom-10   z-90  '>
+            <div className='fixed flex md:space-x-3 md:flex-row flex-col   md:mx-2  md:w-full w-[90%] mx-[5%]    z-90 bottom-10 '>
               <div className='flex space-x-2 justify-center items-center '>
                 <button
                   // onClick={openModal}
@@ -171,4 +238,4 @@ function DisheSingle() {
   );
 }
 
-export default DisheSingle;
+export default CBkDisheDetails;

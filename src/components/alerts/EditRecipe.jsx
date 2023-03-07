@@ -3,10 +3,10 @@ import { Fragment, useState } from 'react'
 
 
 
-export default function CustomModal({ isOpen, openModal, closeModal, submitList, newList, handleChange, close }) {
+export default function EditRecipe({ isOpen, closeModal, openModal, close, handleCHange, value, name, deleteRecipe,
+    handleChangeL, listValue, lists, listName
 
-
-
+}) {
 
 
     return (
@@ -51,13 +51,31 @@ export default function CustomModal({ isOpen, openModal, closeModal, submitList,
                                         as="h3"
                                         className="text-lg font-medium leading-6 text-gray-900"
                                     >
-                                        New List
+                                        Edit Recipe
                                     </Dialog.Title>
-                                    <div className="mt-2">
+                                    <div className="mt-2 flex flex-col">
                                         {/* <p className="text-md text-gray-600">
                                             
                                         </p> */}
-                                        <input className=' px-2 py-2 my-2' value={newList} onChange={handleChange} placeholder="Enter a list name" />
+
+                                        <input className=' px-2 py-2 my-2' placeholder="Enter a title"
+                                            value={value} onChange={handleCHange} name={name} />
+
+                                        <select
+                                            name={listName}
+                                            value={listValue}
+                                            onChange={handleChangeL}
+                                            className="form-select"
+                                        >
+                                            {lists.map((itemValue, index) => {
+                                                return (
+                                                    <option key={index} value={itemValue.id}>
+                                                        {itemValue.name}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+
                                     </div>
 
                                     <div className="mt-4">
@@ -66,14 +84,24 @@ export default function CustomModal({ isOpen, openModal, closeModal, submitList,
                                             className="inline-flex text-white justify-center rounded-md border border-transparent bg-orange-50 px-4 py-2 text-sm font-medium  hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             onClick={closeModal}
                                         >
-                                            Add New List
+                                            Update
                                         </button>
                                         <button
                                             type="button"
                                             className="inline-flex text-orange-700 justify-center rounded-md border border-transparent  px-4 py-2 text-sm font-medium  focus-visible:ring-2 "
                                             onClick={close}
                                         >
-                                            Close
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="inline-flex text-white justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium  hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                            onClick={() => {
+                                                deleteRecipe()
+                                                close()
+                                            }}
+                                        >
+                                            Delete
                                         </button>
                                     </div>
                                 </Dialog.Panel>

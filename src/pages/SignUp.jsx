@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { ColorRing } from "react-loader-spinner";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import homeImageBackground from "../images/homeBackground.png"
 import { motion } from "framer-motion";
 
-// import PageIllustration from "../partials/PageIllustration";
-// import { clearMessage } from "../redux/message";
-// import { registerUser } from "../redux/user-actions";
-// import Notification from "./UI/Notification";
+import { auth } from '../config/firebase'
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { clearMessage, setMessage } from "../redux/message";
+import Swal from 'sweetalert';
 
 const initialState = {
   fullName: "",
@@ -19,31 +19,53 @@ const initialState = {
 
 function SignUp() {
 
-
   const [values, setValues] = useState(initialState);
   const [loading, setLoading] = useState(false);
-  // const notification = useSelector((state) => state.uiSlice.notification);
-  // const { message } = useSelector((state) => state.message);
-  // const { isLoggedIn } = useSelector((state) => state.auth);
   const [visible, setIsVisible] = useState(false)
+  const { message } = useSelector((state) => state.message);
 
-  // const dispatch = useDispatch()
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  // useEffect(() => {
-  //   dispatch(clearMessage())
-  // }, [])
-
+  const register = async () => {
+    setIsVisible(true)
+    try {
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      Swal({
+        icon: "success",
+        title: "Account created successfully",
+        showConfirmButton: false,
+        timer: 2000,
+        confirmButtonColor: '#f0481a',
+      });
+      setTimeout(() => {
+        navigate('/signin')
+      }, 2000);
+      console.log(user);
+    } catch (error) {
+      // console.log(error.message);
+      dispatch(setMessage(error.message.substring(9)))
+    }
+    setTimeout(() => {
+      dispatch(clearMessage())
+    }, 5000);
+    setIsVisible(false)
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
     const { email, password, fullName } = values;
     // if (!email || !password) {
-    setIsVisible(true)
+
+    register()
     // dispatch(registerUser(values)).then((res) => {
     //   isLoggedIn && navigate('/services')
     //   // console.log(isLoggedIn)
@@ -53,6 +75,8 @@ function SignUp() {
 
     // }>
   }
+
+
 
   return (
     <div className="flex flex-col min-h-screen relative overflow-hidden">
@@ -79,10 +103,10 @@ function SignUp() {
               hidden: { opacity: 0, x: -50 },
               visible: { opacity: 1, x: 0 },
             }}
-            className="max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="pt-32 pb-10 md:pt-40 md:pb-16 
+            className="max-w-7xl mx-auto px-4  md:px-6">
+            <div className="pt-32 pb-10 md:translate-y-[20%]  lg:translate-y-0   lg:pb-16 
             flex justify-center items-center">
-              <div className="bg-white bg-opacity-10 shadow-xl py-5 opacity-90 md:w-[45%] w-full rounded-xl">
+              <div className="bg-white bg-opacity-10 px-2 shadow-xl py-5 opacity-90 md:w-[70%] lg:w-[45%] w-full rounded-xl">
                 {/* Page header */}
                 <div className="max-w-3xl mx-auto text-center pb-12 md:pb-10">
                   <h1 className="h3 text-gray-200">
@@ -107,7 +131,7 @@ function SignUp() {
                           value={values.fullName}
                           onChange={handleChange}
                           type="text"
-                          className="form-input w-full text-gray-300"
+                          className="form-input w-full text-gray-700"
                           placeholder="Your name"
                           required
                         />
@@ -127,8 +151,8 @@ function SignUp() {
                           name="email"
                           value={values.email}
                           onChange={handleChange}
-                          className="form-input w-full text-gray-300"
-                          placeholder="you@email.com"
+                          className="form-input w-full text-gray-700"
+                          placeholder="your email"
                           required
                         />
                       </div>
@@ -146,12 +170,22 @@ function SignUp() {
                           name="password"
                           value={values.password}
                           onChange={handleChange}
-                          className="form-input w-full text-gray-300"
+                          className="form-input w-full text-gray-700"
                           placeholder="Password (at least 8 characters)"
                           required
                         />
                       </div>
                     </div>
+                    <p className="my-2 mx-3   text-md font-bold text-center text-gray-700">
+                      {message && (
+                        <div
+                          className="text-red-600 h-full "
+                          role="alert"
+                        >
+                          {message}
+                        </div>
+                      )}
+                    </p>
                     <div className="text-[14px] text-gray-200 text-center">
                       I agree to be contacted by Cook-E about this offer as per
                       the Cook-E{" "}
@@ -189,7 +223,7 @@ function SignUp() {
                     <div
                       to="signin"
                       onClick={() => navigate('/signin')}
-                      className="text-orange-600 ml-2 hover:text-gray-200 transition duration-150 ease-in-out"
+                      className="text-orange-400 ml-2 hover:text-gray-200 transition duration-150 ease-in-out"
                     >
                       Sign in
                     </div>
@@ -224,3 +258,7 @@ function SignUp() {
 }
 
 export default SignUp;
+
+
+
+

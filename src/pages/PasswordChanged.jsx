@@ -82,7 +82,7 @@ function PasswordChanged() {
                         }}
                         className=" mx-auto px-4 sm:px-6">
                         <div className="pt-32 pb-12 md:pt-32 md:pb-20 flex justify-center items-center">
-                            <div className="bg-white bg-opacity-25  shadow-xl py-5 opacity-90 md:w-[45%] w-full rounded-xl">
+                            <div className="bg-white bg-opacity-25 md:translate-y-[20%]  lg:translate-y-0 shadow-xl py-5 opacity-90  md:w-[70%] lg:w-[45%] w-full rounded-xl">
                                 {/* Page header */}
                                 <div className=" mx-auto text-center flex flex-col justify-center items-center space-y-5 pb-12 md:pb-10">
                                     <img src={iconCheck} />

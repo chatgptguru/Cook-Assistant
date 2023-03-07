@@ -65,7 +65,7 @@ function VerifyEmail() {
 
 
             {/* Form */}
-            <div className="sm:w-[60%] md:w-[45%] w-full px-12 py-4 bg-white bg-opacity-25  rounded-xl shadow-xl  mx-auto">
+            <div className="md:translate-y-[20%]  lg:translate-y-0  md:w-[70%] lg:w-[45%] w-full px-12 py-4 bg-white bg-opacity-25  rounded-xl shadow-xl  mx-auto">
               {/* <div className="w-[45%] px-12 py-4  backdrop-blur-lg
                [ p-8 md:p-10 lg:p-10 ]
                [ bg-gradient-to-b from-white/60 to-white/80 ]

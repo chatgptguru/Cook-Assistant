@@ -80,8 +80,8 @@ function RessetPasword() {
               visible: { opacity: 1, x: 0 },
             }}
             className=" mx-auto px-4 sm:px-6">
-            <div className="pt-32 pb-12 md:pt-32 md:pb-20 flex justify-center items-center">
-              <div className="bg-white bg-opacity-25 shadow-xl py-5 opacity-90 md:w-[45%] w-full rounded-xl">
+            <div className="pt-32 pb-12 md:pt-32 md:translate-y-[20%]  lg:translate-y-0 md:pb-20 flex justify-center items-center">
+              <div className="bg-white bg-opacity-25 shadow-xl py-5 px-2 opacity-90 md:w-[70%] lg:w-[45%] w-full rounded-xl">
                 {/* Page header */}
                 <div className="max-w-3xl mx-auto text-center pb-12 md:pb-10">
                   <h1 className="h3 text-gray-200">
