@@ -6,15 +6,11 @@ import { setMessage } from "../../redux/message";
 import { setRecipe1, setRecipe2, setRecipe3, setRecipes } from "../../redux/recipes";
 import { useNavigate } from "react-router-dom";
 import { setInstructions } from "../../redux/instructions";
-import parse from 'html-react-parser'
-
-
 
 //   const text = '2-Tomatoes 3-Garlic 4-Instructions: Bake in the oven Garlic Baked Chicken with Tomatoes Ingredients: -1 whole chicken -2 tomatoes, sliced -4 cloves of garlic, minced -1 teaspoon of olive oil -Salt and pepper to taste Instructions: 1. Preheat the oven to 375°F. 2. Place the chicken in a baking dish. 3. Drizzle the olive';
 
 //   const formattedText = formatText(text);
 //   console.log(formattedText);
-
 
 
 export default function GenerateInstructions({ prompt }) {
@@ -33,7 +29,7 @@ export default function GenerateInstructions({ prompt }) {
 
     // import.meta.env.VITE_Open_AI_Key
     const configuration = new Configuration({
-        apiKey: "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",
+        apiKey: "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",
     });
 
     const openai = new OpenAIApi(configuration);
@@ -83,7 +79,7 @@ export default function GenerateInstructions({ prompt }) {
                 <>
 
                     <p className="mb-8 text-gray-200 ">
-                        {parse(instructions)}
+                        {instructions}
                     </p>
                     {/* <div>
                         {substrings.map((substring, index) => {

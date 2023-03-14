@@ -10,27 +10,26 @@ import { useSelector } from 'react-redux';
 import GenerateInstructions from './open-ai/GenerateInstructions';
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { db, auth, firestoredDB } from "../config/firebase";
-import parse from 'html-react-parser'
 import { Scrollbars } from 'react-custom-scrollbars';
 
 function DisheSingle() {
 
   const navigate = useNavigate()
 
-
   const moviesCollectionRef = collection(firestoredDB, "CookBook");
-
 
   const { recipe1, recipes } = useSelector((state) => state.recipe)
   const { image } = useSelector((state) => state.image)
   const { prompt } = useSelector((state) => state.prompt)
   const { ingredients } = useSelector((state) => state.ingredients)
+  const [add, setAdd] = useState("Add To CookBook")
 
-  const ingredientsAndInstructions = `Write a recipe ingredients and instructions for this recipe ${recipe1}: \r\n  using ${ingredients.IncludedIngredients} with h2 html tag for each instructions and ingredients`
+  const ingredientsAndInstructions = `Write a recipe ingredients and instructions for this recipe ${recipe1}: \r\n  using ${ingredients.IncludedIngredients} and execlude these ingredients : ${ingredients.ExcludedIngredients}.`
 
   // const ingredientsAndInstructions = `Pleae provide ingredients for this recipe ${recipe1}, put ingredients title in h2 tag and ingredients in list html tag,also Please provide instructions for this recipe ${recipe1}, put instructions title in h2 tag and instructions in list html tag, `
   // Add a new document in collection "cities"
   const onSubmitRecipe = async () => {
+    setAdd("Adding...")
     try {
       await addDoc(moviesCollectionRef, {
         userId: auth?.currentUser?.uid,
@@ -38,8 +37,7 @@ function DisheSingle() {
         ingredients: ingredients || null,
         imageUrl: image || null,
         title: "",
-        listId: ""
-
+        listId: null
       });
 
       Swal({
@@ -50,24 +48,11 @@ function DisheSingle() {
         confirmButtonColor: '#f0481a',
 
       });
+      setAdd("Add To CookBook")
     } catch (err) {
-      // console.error(err);
-      console.log(err.message);
-      // err.message === "Network Error"
-      //   ? Swal({
-      //     icon: "warning",
-      //     title: "No internet connection. Please check your network",
-      //     showConfirmButton: false,
-      //     timer: 1500,
-      //   })
-      //   : err.message === "Request failed with status code 403"
-      //     ? Swal({
-      //       icon: "error",
-      //       title: "Password not correct",
-      //       showConfirmButton: false,
-      //       timer: 1500,
-      //     })
-      //     :
+
+      // console.log(err.message);
+
       Swal({
         icon: "info",
         title: err.message,
@@ -77,15 +62,11 @@ function DisheSingle() {
     }
   };
 
-  // useEffect(() => {
-  //   onSubmitRecipe()
-  // }, [])
-
   return (
     <section className="relative  ">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-32 md:pb-40">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             {/* Background image */}
             <div className="absolute h-auto inset-0  pt-16 box-content -z-1">
               <img className="absolute inset-0 w-full h-full object-cover " src={homeImageBackground} width="1440" height="577" alt="About" />
@@ -96,7 +77,7 @@ function DisheSingle() {
               autoHeightMax={400}> */}
 
             {/* Article content */}
-            <div className="text-lg pb-20   text-gray-400">
+            <div className="text-lg pb-20 bg-[#2a93dd40] px-4 py-4 rounded-xl   text-gray-400">
 
               <figure className=" flex justify-center">
                 {/* <img className="  h-auto w-full" src={recipeB} alt="News inner" /> */}
@@ -108,61 +89,60 @@ function DisheSingle() {
               <div className='bg-white cursor-pointer bg-opacity-20 text-white my-2 transition duration-150 hover:scale-105 p-2 rounded-2xl'>
                 {/* This dish features tender and flavorful duck legs that are slow-cooked in their own fat, served with a side of garlic and herb mashed potatoes. Duck confit is a traditional French dish that is perfect for a hearty and satisfying meal. */}
 
-                {parse(recipe1)}
+                {recipe1}
               </div>
               <h4 className="font-medium text-primary-600 mb-8">Ingredients  & Cooking Directions:</h4>
               <GenerateInstructions prompt={ingredientsAndInstructions} />
 
+              <div className='fixed flex md:space-x-3 md:flex-row 
+            flex-col    md:w-full w-[90%] mx-[5%] bottom-10
+               z-90  '>
+                <div className='flex space-x-2 justify-center items-center '>
+                  <button
+                    // onClick={openModal}
+                    onClick={onSubmitRecipe}
+                    className="
+            bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
+            font-medium  border border-transparent w-44 p-2.5
+             my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
+                  >
+                    {add}
+                  </button>
+                  <button
+                    className="
+            bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
+            font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
+             my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
+                  >
+                    Find Varient
+                  </button>
+                </div>
+                <div className='flex space-x-2 justify-center items-center'>
+                  <button
+                    onClick={() => navigate('/get-dishes')}
+                    className="
+            bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
+            font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
+             my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
+                  >
+                    Back to Dishes
+                  </button>
+                  <button
+                    onClick={() => navigate('/discover-dishes')}
+                    className="
+            bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
+            font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
+             my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
+                  >
+                    Start Fresh
+                  </button>
+                </div>
 
-
+              </div>
             </div>
-
 
             {/* </Scrollbars> */}
 
-            <div className='fixed flex md:space-x-3 md:flex-row flex-col   md:mx-2  md:w-full w-[90%] mx-[5%] bottom-10   z-90  '>
-              <div className='flex space-x-2 justify-center items-center '>
-                <button
-                  // onClick={openModal}
-                  onClick={onSubmitRecipe}
-                  className="
-            bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
-            font-medium  border border-transparent w-40 p-2.5
-             my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
-                >
-                  Add to Cookbook
-                </button>
-                <button
-                  className="
-            bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
-            font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
-             my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
-                >
-                  Find Varient
-                </button>
-              </div>
-              <div className='flex space-x-2 justify-center items-center'>
-                <button
-                  onClick={() => navigate('/get-dishes')}
-                  className="
-            bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
-            font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
-             my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
-                >
-                  Back to Dishes
-                </button>
-                <button
-                  onClick={() => navigate('/discover-dishes')}
-                  className="
-            bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
-            font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
-             my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
-                >
-                  Start Fresh
-                </button>
-              </div>
-
-            </div>
 
           </div>
         </div>

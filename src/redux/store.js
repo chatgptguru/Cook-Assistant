@@ -8,6 +8,7 @@ import { imageReducer } from "./image";
 import { ingredientsReducer } from "./ingredients";
 import { instructionsReducer } from "./instructions";
 import { searchReducer } from "./search";
+import { recipeCardReducer } from "./recipeCard";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "@reduxjs/toolkit";
 
@@ -37,7 +38,8 @@ const reducers = combineReducers({
   ingredients:ingredientsReducer,
   image:imageReducer,
   instructions: instructionsReducer,
-  search: searchReducer
+  search: searchReducer,
+  recipeCard: recipeCardReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

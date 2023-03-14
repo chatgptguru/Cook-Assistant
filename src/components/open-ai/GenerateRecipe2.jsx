@@ -18,7 +18,7 @@ export default function GenerateRecipe2({ prompt }) {
 
     // import.meta.env.VITE_Open_AI_Key
     const configuration = new Configuration({
-        apiKey: "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",
+        apiKey: "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",
     });
 
     const openai = new OpenAIApi(configuration);

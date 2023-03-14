@@ -131,7 +131,7 @@ function SignIn() {
                           value={values.email}
                           onChange={handleChange}
                           className="form-input w-full rounded-full text-gray-700"
-                          placeholder="you email "
+                          placeholder="Enter your email "
                           required
                         />
                       </div>

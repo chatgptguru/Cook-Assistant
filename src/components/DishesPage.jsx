@@ -20,7 +20,7 @@ export default function DishesPage() {
     <section className="relative min-h-screen ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-28 md:pb-20">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="absolute h-auto inset-0  pt-16 box-content -z-1">
               <img className="absolute inset-0 w-full h-full object-cover " src={homeImageBackground} width="1440" height="577" alt="About" />
               <div className="absolute inset-0 bg-gradient-to-t  from-gray-700 dark:from-gray-900" aria-hidden="true"></div>
@@ -28,7 +28,7 @@ export default function DishesPage() {
             </div>
 
             {/* <Scrollbars style={{ height: 500, paddingRight: '8px' }} */}
-            <article className='overflow-x-hidden'>
+            <article className='overflow-x-hidden bg-[#2a93dd40] rounded-xl px-8'>
 
               {/* Article content */}
               <div className="text-lg pb-20 text-gray-400">
@@ -59,58 +59,58 @@ export default function DishesPage() {
 
 
               </div>
+              <div className='fixed 
+             flex  md:flex-row flex-col md:space-x-6  md:mx-2
+              md:w-full w-[90%] mx-[5%]
+                  z-90 bottom-10 '>
+                <div className='flex justify-center items-center space-x-6 '>
+                  <button
+                    onClick={() => navigate('/dishe-details')}
+                    className="bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
+            font-medium  border border-transparent w-40 p-2.5
+             my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
+                  >
+                    Dish 1
+                  </button>
+                  <button
+                    onClick={() => navigate('/dishe-details')}
+                    className="
+            bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
+            font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
+                 my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
+                  >
+                    Dish 2
+                  </button>
+                </div>
+                <div className='flex space-x-6  justify-center items-center '>
+                  <button
+                    onClick={() => navigate('/dishe-details')}
+                    className="
+                  bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
+                    font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
+                     my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
+                  >
+                    Dish 3
+                  </button>
+                  <button
+                    onClick={() => navigate('/get-dishes')}
+                    className="
+          bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
+            font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
+             my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
+                  >
+                    3 New Dishes
+                  </button>
+                </div>
 
+
+              </div>
 
             </article>
             {/* </Scrollbars> */}
 
 
-            <div className='fixed 
-             flex  md:flex-row flex-col md:space-x-6  md:mx-2
-              md:w-full w-[90%] mx-[5%]
-                  z-90 bottom-10 '>
-              <div className='flex justify-center items-center space-x-6 '>
-                <button
-                  onClick={() => navigate('/dishe-details')}
-                  className="bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
-            font-medium  border border-transparent w-40 p-2.5
-             my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
-                >
-                  Dish 1
-                </button>
-                <button
-                  onClick={() => navigate('/dishe-details')}
-                  className="
-            bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
-            font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
-                 my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
-                >
-                  Dish 2
-                </button>
-              </div>
-              <div className='flex space-x-6  justify-center items-center '>
-                <button
-                  onClick={() => navigate('/dishe-details')}
-                  className="
-                  bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
-                    font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
-                     my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
-                >
-                  Dish 3
-                </button>
-                <button
-                  onClick={() => navigate('/get-dishes')}
-                  className="
-          bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
-            font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
-             my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
-                >
-                  3 New Dishes
-                </button>
-              </div>
 
-
-            </div>
 
           </div>
         </div>

@@ -1,23 +1,29 @@
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import recipe from '../images/recipeA.png'
 import recipeA from '../images/recipeA.png'
+import { setRecipeCard } from '../redux/recipeCard'
 import EditRecipe from './alerts/EditRecipe'
+import Swal from 'sweetalert';
 
-export default function RecipeCard({ handleChangeL, listValue, lists, listName, image, title, description, onClick, Customize, db, id, getCookBoookData }) {
+export default function RecipeCard({ handleChangeL, listValue, onClickRC, lists, listName, image, title, description, onClick, Customize, db, id, getCookBoookData }) {
 
 
     let [isOpen2, setIsOpen2] = useState(false)
-    const [updatedTitle, setUpdatedTitle] = useState("");
+    const [updatedTitle, setUpdatedTitle] = useState(title);
+    const [updatedDescription, setUpdatedDescription] = useState(description);
 
     function closeModal2(id) {
         setIsOpen2(false)
         updateRecipeTitle(id)
     }
 
+
     function close2() {
         setIsOpen2(false)
     }
+
 
     function openModal2() {
         setIsOpen2(true)
@@ -25,18 +31,67 @@ export default function RecipeCard({ handleChangeL, listValue, lists, listName, 
     }
 
     const deleteRecipe = async () => {
-        const movieDoc = doc(db, "CookBook", id);
-        await deleteDoc(movieDoc);
+        try {
+            const movieDoc = doc(db, "CookBook", id);
+            await deleteDoc(movieDoc);
+            getCookBoookData()
+            Swal({
+                icon: "success",
+                title: "Recipe deleted successfully",
+                showConfirmButton: false,
+                timer: 3000,
+                confirmButtonColor: '#f0481a',
+
+            });
+        } catch (error) {
+            Swal({
+                icon: "info",
+                title: error.message,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+        }
     };
 
     const updateRecipeTitle = async (id) => {
-        const movieDoc = doc(db, "CookBook", id);
-        await updateDoc(movieDoc, { title: updatedTitle, listId: listValue });
+
+        try {
+            const movieDoc = doc(db, "CookBook", id);
+            await updateDoc(movieDoc, { title: updatedTitle, listId: listValue, description: updatedDescription });
+            getCookBoookData()
+            Swal({
+                icon: "success",
+                title: "Recipe updated successfully",
+                showConfirmButton: false,
+                timer: 3000,
+                confirmButtonColor: '#f0481a',
+
+            });
+        } catch (error) {
+            Swal({
+                icon: "info",
+                title: error.message,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+        }
+
         // getCookBoookData()
     };
 
+    const dispatch = useDispatch()
+    const viewDetails = () => {
+        dispatch(setRecipeCard({
+            title,
+            description,
+            image
+        }))
+    }
+
     return (
-        <div className='flex 
+        <div
+
+            className='flex 
         transition ease-in-out delay-100 pb-2   md:hover:translate-x-2
         '>
 
@@ -46,8 +101,8 @@ export default function RecipeCard({ handleChangeL, listValue, lists, listName, 
                 </div>
                 <div className='flex-[70%]'>
                     <div className="">
-                        <div className=" text-gray-100 font-bold  text-md md:text-xl">{title}</div>
-                        <div className="text-gray-100 mb-1  md:mb-3">
+                        <div className=" text-gray-100  font-bold  text-md md:text-xl">{title}</div>
+                        <div className="text-gray-100  overflow-y-hidden  mb-1 h-[120px]   md:mb-3">
                             <p className=''> {description}</p>
                         </div>
                     </div>
@@ -57,13 +112,23 @@ export default function RecipeCard({ handleChangeL, listValue, lists, listName, 
                             type="button"
                             className="inline-flex text-primary-600 justify-center rounded-md   border-2 border-primary-600  px-4 py-2 text-sm font-medium  focus-visible:ring-2 ">
 
-                            Customize
+                            Edit Recipe
 
                         </button>
                         <button
                             type="button"
                             className="inline-flex text-white justify-center rounded-md border border-transparent bg-orange-50 px-4 py-2 text-sm font-medium  hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                         >  Share
+                            {/* <span className="tracking-normal group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span> */}
+                        </button>
+                        <button
+                            onClick={() => {
+                                viewDetails()
+                                onClickRC()
+                            }}
+                            type="button"
+                            className="inline-flex text-white justify-center rounded-md border border-transparent bg-[#2a93dd40] px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        >  View Details
                             {/* <span className="tracking-normal group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span> */}
                         </button>
                     </div>
@@ -75,7 +140,20 @@ export default function RecipeCard({ handleChangeL, listValue, lists, listName, 
                 listValue={listValue}
                 lists={lists}
                 handleChangeL={handleChangeL}
-                isOpen={isOpen2} deleteRecipe={deleteRecipe} name="updatedTitle" handleCHange={((e) => setUpdatedTitle(e.target.value))} value={updatedTitle} close={close2} closeModal={() => closeModal2(id)} />
+                isOpen={isOpen2} deleteRecipe={deleteRecipe}
+
+                name="updatedTitle"
+                handleCHange={((e) => setUpdatedTitle(e.target.value))}
+                value={updatedTitle}
+
+                nameD="updatedDescription"
+                handleCHangeD={((e) => setUpdatedDescription(e.target.value))}
+                valueD={updatedDescription}
+
+                close={close2} closeModal={() => closeModal2(id)}
+
+
+            />
 
         </div>
     )

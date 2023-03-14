@@ -11,7 +11,7 @@ export default function GenerateImageRecipe({ prompt }) {
         "Search Bears with Paint Brushes the Starry Night, painted by Vincent Van Gogh.."
     );
     const configuration = new Configuration({
-        apiKey: "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",
+        apiKey: "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",
     });
 
     const dispatch = useDispatch()
