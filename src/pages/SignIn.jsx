@@ -48,13 +48,20 @@ function SignIn() {
       dispatch(switchLoginStatus(true))
       dispatch(setUserData(user))
       navigate('/discover-dishes')
-    } catch (error) {
-      // dispatch(setMessage((error.response &&
-      //   error.response.data &&
-      //   error.response.data.message) ||
-      //   error.message ||
-      //   error.toString()))
-      dispatch(setMessage(error.message.substring(9)))
+    } catch (err) {
+      if (err.code === 'auth/invalid-email') {
+        dispatch(setMessage('Invalid email ID'));
+      }
+      if (err.code === 'auth/user-not-found') {
+        dispatch(setMessage('Please check your email'));
+      }
+      if (err.code === 'auth/wrong-password') {
+        dispatch(setMessage('Please check your password'));
+      }
+      if (err.code === 'auth/too-many-requests') {
+        dispatch(setMessage('Too many attempts, please try again later'));
+      }
+      // dispatch(setMessage(error.message.substring(9)))
     }
     setTimeout(() => {
       dispatch(clearMessage())

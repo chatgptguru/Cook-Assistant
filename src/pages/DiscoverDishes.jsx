@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux'
 import GenerateRecipe from '../components/open-ai/GenerateRecipe'
 import { setPrompt } from '../redux/prompt'
 import { setIngredients } from '../redux/ingredients'
+import ResetPassword from './ResetPassword'
+import EmailVerification from '../components/EmailVerification'
 
 const initialState = {
     Culture: "",
@@ -28,6 +30,7 @@ export default function DiscoverDishes() {
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value });
     };
+
 
     // const [prompt, setPrompt] = useState("")
     const navigate = useNavigate()
@@ -113,9 +116,10 @@ export default function DiscoverDishes() {
                     }}
 
 
+
                     className='lg:w-[55%] rounded-xl md:w-[90%] p-2  md:pt-6 py-2 space-y-3 pb-10 
                     bg-white shadow-xl  bg-clip-padding bg-opacity-25  
-                    '>
+                    '>  <EmailVerification />
                     {/* Header */}
                     <div className='flex mx-4 my-2 justify-center items-center'>
                         <img src={title} alt='title' />

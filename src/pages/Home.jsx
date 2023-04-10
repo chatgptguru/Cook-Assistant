@@ -12,7 +12,7 @@ export default function Home() {
 
             {/* Background image */}
             <div className="absolute h-auto inset-0  pt-16 box-content -z-1">
-                <img className="absolute inset-0 w-full h-full object-cover " src={homeImageBackground} width="1440" height="577" alt="About" />
+                <img className="absolute inset-0 w-full h-full object-cover " src={homeImageBackground} alt="About" />
                 <div className="absolute inset-0 bg-gradient-to-t  from-gray-700 dark:from-gray-900" aria-hidden="true"></div>
             </div>
 

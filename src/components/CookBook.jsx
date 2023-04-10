@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom'
 import CookBookk from "../images/PersonalCookbook.png"
 import RecipeCard from './RecipeCard'
 import homeImageBackground from "../images/homeBackground.png"
-
 import { addDoc, collection, doc, setDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
 import { db, auth, firestoredDB } from "../config/firebase";
 import { useDispatch, useSelector } from 'react-redux'
@@ -20,7 +19,6 @@ import Swal from 'sweetalert';
 import CustomModal from './alerts/CustomModal'
 import EditRecipe from './alerts/EditRecipe'
 import RecipeCardDetails from './alerts/RecipeCardDetails'
-
 export default function CookBook() {
     const navigate = useNavigate()
 
@@ -131,6 +129,7 @@ export default function CookBook() {
                     name: newList
                 });
                 getCookBookList()
+                getLists()
                 Swal({
                     icon: "success",
                     title: "List added successfully",
@@ -161,6 +160,7 @@ export default function CookBook() {
     function closeModal() {
         onSubmitList()
         setIsOpen(false)
+
     }
 
     function close() {
@@ -195,6 +195,31 @@ export default function CookBook() {
     const { recipeCard } = useSelector((state) => state.recipeCard)
 
 
+    let [deleteR, setDeleting] = useState(false)
+    const deleteList = async (id) => {
+        setDeleting(true)
+        try {
+            const movieDoc = doc(firestoredDB, "Lists", id);
+            await deleteDoc(movieDoc);
+            getLists()
+            Swal({
+                icon: "success",
+                title: "Recipe deleted successfully",
+                showConfirmButton: false,
+                timer: 3000,
+                confirmButtonColor: '#f0481a',
+
+            });
+        } catch (error) {
+            Swal({
+                icon: "info",
+                title: error.message,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+        }
+        setDeleting(false)
+    }
     // console.log(" clicked list id : " + clickedListId)
 
     return (
@@ -268,16 +293,27 @@ font-medium  flex items-center justify-center border border-transparent lg:px-14
                                                             listsData.length === 0 ? <p className='text-white text-center text-xl'>You have not lists</p> :
                                                                 <>
 
-                                                                    {listsData.map((recipe, idx) => {
+                                                                    {listsData.map((list, idx) => {
                                                                         return <div
                                                                             key={idx}
-                                                                            onClick={() => setCLickedListId(recipe.id)}
+
                                                                             className={`lg:w-52 w-full
-                                                    md:mx-0 bg-clip-padding ${clickedListId === recipe.id ? "bg-primary-600" : "bg-opacity-25 bg-white"} 
-                                                 font-medium  flex items-center justify-center border border-transparent lg:px-14 py-2.5
+                                                    md:mx-0 bg-clip-padding ${clickedListId === list.id ? "bg-primary-600" : "bg-opacity-25 bg-white"} 
+                                                 font-medium  flex items-start justify-between border border-transparent lg:px-4 py-2.5
                                                   my-2 rounded-full text-gray-800  transition duration-150 ease-in-out`}
                                                                         >
-                                                                            {recipe.name}
+
+                                                                            <div className='cursor-pointer' onClick={() => setCLickedListId(list.id)}>{list.name}</div>
+                                                                            <div onClick={() => deleteList(list.id)}>
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff4500" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                                    <line x1="4" y1="7" x2="20" y2="7" />
+                                                                                    <line x1="10" y1="11" x2="10" y2="17" />
+                                                                                    <line x1="14" y1="11" x2="14" y2="17" />
+                                                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                                                </svg>
+                                                                            </div>
                                                                         </div>
                                                                     })}
 
@@ -311,11 +347,6 @@ font-medium  flex items-center justify-center border border-transparent lg:px-14
                                                 }
                                                 {loading &&
                                                     <p className='text-white text-center text-xl'>Loading data... Please wait</p>}
-                                                {/* {cookBookData.length === 0 && <p className='text-white text-center text-xl'>Your CokBook is Empty</p>}
-                        {cookBookData.length > 0 && cookBookData.map((recipe, idx) => {
-                            return <RecipeCard key={idx} image={recipe.imageUrl} description={recipe.description} />
-                        })} */}
-
                                             </div>
                                         </div></>
 
@@ -323,16 +354,12 @@ font-medium  flex items-center justify-center border border-transparent lg:px-14
 
                         </motion.div>
 
-
-
-
                         <CustomModal isOpen={isOpen} close={close} openModal={openModal} newList={newList}
                             handleChange={handleChange2} closeModal={closeModal} />
                         <RecipeCardDetails isOpen={isOpenR} close={closeR} openModal={openModalR}
                             recipeCardData={recipeCard} closeModal={closeModalR} />
 
                         {/* <EditRecipe isOpen={isOpen2} close={close2} closeModal={closeModal2} /> */}
-
 
                     </div>
                 </div>

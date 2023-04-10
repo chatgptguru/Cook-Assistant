@@ -9,8 +9,8 @@ import Swal from 'sweetalert';
 
 export default function RecipeCard({ handleChangeL, listValue, onClickRC, lists, listName, image, title, description, onClick, Customize, db, id, getCookBoookData }) {
 
-
     let [isOpen2, setIsOpen2] = useState(false)
+    let [deleteR, setDeleting] = useState(false)
     const [updatedTitle, setUpdatedTitle] = useState(title);
     const [updatedDescription, setUpdatedDescription] = useState(description);
 
@@ -18,7 +18,6 @@ export default function RecipeCard({ handleChangeL, listValue, onClickRC, lists,
         setIsOpen2(false)
         updateRecipeTitle(id)
     }
-
 
     function close2() {
         setIsOpen2(false)
@@ -31,6 +30,7 @@ export default function RecipeCard({ handleChangeL, listValue, onClickRC, lists,
     }
 
     const deleteRecipe = async () => {
+        setDeleting(true)
         try {
             const movieDoc = doc(db, "CookBook", id);
             await deleteDoc(movieDoc);
@@ -51,6 +51,7 @@ export default function RecipeCard({ handleChangeL, listValue, onClickRC, lists,
                 timer: 2000,
             });
         }
+        setDeleting(false)
     };
 
     const updateRecipeTitle = async (id) => {
@@ -115,12 +116,7 @@ export default function RecipeCard({ handleChangeL, listValue, onClickRC, lists,
                             Edit Recipe
 
                         </button>
-                        <button
-                            type="button"
-                            className="inline-flex text-white justify-center rounded-md border border-transparent bg-orange-50 px-4 py-2 text-sm font-medium  hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        >  Share
-                            {/* <span className="tracking-normal group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span> */}
-                        </button>
+
                         <button
                             onClick={() => {
                                 viewDetails()
@@ -129,6 +125,13 @@ export default function RecipeCard({ handleChangeL, listValue, onClickRC, lists,
                             type="button"
                             className="inline-flex text-white justify-center rounded-md border border-transparent bg-[#2a93dd40] px-4 py-2 text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                         >  View Details
+                            {/* <span className="tracking-normal group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span> */}
+                        </button>
+                        <button
+                            onClick={deleteRecipe}
+                            type="button"
+                            className="inline-flex text-white justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium  hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        >  {deleteR ? "Deleting..." : "Delete Recipe"}
                             {/* <span className="tracking-normal group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span> */}
                         </button>
                     </div>
@@ -140,8 +143,7 @@ export default function RecipeCard({ handleChangeL, listValue, onClickRC, lists,
                 listValue={listValue}
                 lists={lists}
                 handleChangeL={handleChangeL}
-                isOpen={isOpen2} deleteRecipe={deleteRecipe}
-
+                isOpen={isOpen2}
                 name="updatedTitle"
                 handleCHange={((e) => setUpdatedTitle(e.target.value))}
                 value={updatedTitle}

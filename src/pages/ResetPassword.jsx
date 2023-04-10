@@ -1,38 +1,62 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import homeImageBackground from "../images/homeBackground.png"
 import { motion } from "framer-motion";
-
-
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '../config/firebase'
+import Swal from 'sweetalert';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMessage } from '../redux/message';
+import { ColorRing } from 'react-loader-spinner';
 
 const initialState = {
-  fullName: "",
   email: "",
-  password: "",
 };
 function ResetPassword() {
 
   const [values, setValues] = useState(initialState);
   const [visible, setIsVisible] = useState(false)
+  const { message } = useSelector((state) => state.message);
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const resetPassword = async (email) => {
+    setIsVisible(true)
+    try {
+      await sendPasswordResetEmail(auth, email);
+      Swal({
+        icon: "success",
+        title: 'reset link has been sent to your email inbox',
+        showConfirmButton: true,
+        // timer: 4000,
+        confirmButtonColor: '#f35d34',
+      });
+      navigate('/signin')
+    } catch (error) {
+
+      if (error.code === 'auth/user-not-found') {
+        dispatch(setMessage('User not found'));
+      } else {
+        dispatch(setMessage(error.message))
+      }
+
+    }
+    setIsVisible(false)
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
-    const { email, password, fullName } = values;
-    // if (!email || !password) {
-    setIsVisible(true)
-    // dispatch(registerUser(values)).then((res) => {
-    //   isLoggedIn && navigate('/services')
-    //   // console.log(isLoggedIn)
-    // }).catch((error) => {
-    //   setIsVisible(false)
-    // })
+    const { email } = values;
 
-    // }>
+    // setIsVisible(true)
+    resetPassword(email)
+
   }
 
   return (
@@ -87,7 +111,7 @@ function ResetPassword() {
                       className="block text-gray-300 text-sm font-medium mb-1"
                       htmlFor="email"
                     >
-                      Work Email <span className="text-red-600">*</span>
+                      Email <span className="text-red-600">*</span>
                     </label>
                     <input
                       type="email"
@@ -95,23 +119,41 @@ function ResetPassword() {
                       value={values.email}
                       onChange={handleChange}
                       className="form-input w-full text-gray-300"
-                      placeholder="you@yourcompany.com"
+                      placeholder="you@email.com"
                       required
                     />
                   </div>
                 </div>
-
+                <p className="mt-2 mx-3   text-md font-bold text-center text-gray-700">
+                  {message && (
+                    <div
+                      className="text-red-600 h-full "
+                      role="alert"
+                    >
+                      {message}
+                    </div>
+                  )}
+                </p>
 
                 <div className="flex flex-wrap  mt-6">
                   <div className="w-full rounded-md">
-                    <Link to="/verify-email">
-                      <button type="submit" className="btn text-white bg-gradient-to-r from-orange-100 rounded-xl to-orange-50 w-full">
-
-                        Send reset link
-                      </button>
-                    </Link>
+                    {/* <Link to="/verify-email"> */}
+                    <button type="submit" className="btn text-white bg-gradient-to-r from-orange-100 rounded-xl to-orange-50 w-full">
+                      Send reset link
+                    </button>
                   </div>
                 </div>
+                {visible &&
+                  <div className="z-50 absolute top-[50%] left-[50%] -translate-x-[50%]">
+                    <ColorRing visible={true}
+                      height="100"
+                      width="100"
+                      ariaLabel="blocks-loading"
+                      wrapperStyle={{}}
+                      wrapperClass="blocks-wrapper"
+                      colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+                    /></div>
+                }
                 {/* <p className="mt-8 mx-3 text-xs font-bold text-center text-gray-700">
                     {message && (
                       <div
@@ -124,7 +166,7 @@ function ResetPassword() {
                   </p> */}
               </form>
               <div className="text-gray-400 text-center mt-6">
-                <Link to="/signin" className="text-orange-600 hover:text-gray-200 transition duration-150 ease-in-out">Cancel</Link>
+                <Link to="/signin" className="text-white hover:text-orange-200 font-medium transition duration-150 ease-in-out">Cancel</Link>
               </div>
             </div>
 

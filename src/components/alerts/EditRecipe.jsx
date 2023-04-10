@@ -45,28 +45,28 @@ export default function EditRecipe({ isOpen, closeModal, openModal, close, handl
                                         Edit Recipe
                                     </Dialog.Title>
                                     <div className="mt-2 flex flex-col">
-                                        {/* <p className="text-md text-gray-600">
-                                            
-                                        </p> */}
 
-                                        <input className=' px-2 py-2 my-2' placeholder="Enter a title"
+                                        <input className=' px-2 py-2 my-2 border border-gray-500 focus:border-orange-500' placeholder="Enter a title"
                                             value={value} onChange={handleCHange} name={name} />
                                         <textarea rows={4} className=' px-2 py-2 my-2' placeholder="Enter your description"
                                             value={valueD} onChange={handleCHangeD} name={nameD} />
 
+                                        <p className='py-2 font-medium'>Add To List</p>
                                         <select
                                             name={listName}
                                             value={listValue}
                                             onChange={handleChangeL}
                                             className="form-select"
                                         >
-                                            {lists.map((itemValue, index) => {
+                                            <option value={lists[0]?.id} selected  >{lists[0]?.name}</option>
+                                            {lists.filter((item) => item.id != lists[0]?.id).map((itemValue, index) => {
                                                 return (
                                                     <option key={index} value={itemValue.id}>
                                                         {itemValue.name}
                                                     </option>
                                                 );
                                             })}
+
                                         </select>
 
                                     </div>
@@ -86,7 +86,7 @@ export default function EditRecipe({ isOpen, closeModal, openModal, close, handl
                                         >
                                             Cancel
                                         </button>
-                                        <button
+                                        {/* <button
                                             type="button"
                                             className="inline-flex text-white justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium  hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             onClick={() => {
@@ -95,7 +95,7 @@ export default function EditRecipe({ isOpen, closeModal, openModal, close, handl
                                             }}
                                         >
                                             Delete
-                                        </button>
+                                        </button> */}
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
