@@ -6,13 +6,13 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAzF8TOBsucyiQWrhn88MGcGkaWey6_TXQ",
-  authDomain: "cook-e-a2365.firebaseapp.com",
-  projectId: "cook-e-a2365",
-  storageBucket: "cook-e-a2365.appspot.com",
-  messagingSenderId: "907259754053",
-  appId: "1:907259754053:web:823e06e8cbbb830283152c",
-  measurementId: "G-SP7XNW3MNS"
+  apiKey: "AIzaSyBwESKzQv9l6UzkTsxBvX4d_G-GfGR-zWk",
+  authDomain: "cook-e-ai.firebaseapp.com",
+  projectId: "cook-e-ai",
+  storageBucket: "cook-e-ai.appspot.com",
+  messagingSenderId: "915319492687",
+  appId: "1:915319492687:web:0c6e6c9c5b410436959a3a",
+  measurementId: "G-NEF7JVWNHC"
 };
 
 // Initialize Firebase
