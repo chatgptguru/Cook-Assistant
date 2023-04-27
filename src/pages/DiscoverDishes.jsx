@@ -43,12 +43,14 @@ export default function DiscoverDishes() {
     }
     const { Culture, IncludedIngredients, ExcludedIngredients, Description, Occasion, Language, FreeFlow } = values;
     // const { Culture, IncludedIngredients, ExcludedIngredients, Description, Occasion, Language, FreeFlow } = values;
-    let prompt = `Create a dishe with the following format: dish name, followed by a description : ${Description}
-    \n\nEnsure that the occasion is ${Occasion} occasion and 
-     includes these ingredients :${IncludedIngredients}, excluding
-      these ingredients ${ExcludedIngredients}.\n\nAlso Ensure that the culture is ${Culture} culture.
-      Also ensure to include to include this free flow ${FreeFlow} for this ${Language} language 
-      `
+    // let prompt = `Create a dishe with the following format: dish name, followed by a description : ${Description}
+    // \n\nEnsure that the occasion is ${Occasion} occasion and 
+    //  includes these ingredients :${IncludedIngredients}, excluding
+    //   these ingredients ${ExcludedIngredients}.\n\nAlso Ensure that the culture is ${Culture} culture.
+    //   Also ensure to include to include this free flow ${FreeFlow} for this ${Language} language 
+    //   `
+
+    let prompt = `Let's cook up something delicious! Please find me a ${Culture} recipe that  ${FreeFlow} includes the ingredients ${IncludedIngredients}, but does not contain ${ExcludedIngredients}. It should be ${Description} and be suit no able for ${Occasion}. Please write the recipe in ${Language}.`
 
     // let prompt = `Generate a recipe with the following format: dish name wih h2 html tag, followed by a description, using h4 html tag of each dish based on the specified ingredients.\n\nEnsure that each recipe is suitable for a ${Occasion} and includes these ingredients :${IncludedIngredients} and excluding these ingredients ${ExcludedIngredients}. Provide a detailed description for each recipe, including step-by-step instructions and cooking tips to ensure that the dish turns out perfectly.\n\nIncorporate a unique language element that ties the recipe to the ${Culture} culture, making it authentic and culturally appropriate. Don't forget to include the following variables in each recipe:\n\n- Occasion: ${Occasion}\n- Excluded Ingredients: ${ExcludedIngredients}\n- Included Ingredients: ${IncludedIngredients}\n- Culture: ${Culture}\n- Language: ${Language}`
 
@@ -75,7 +77,6 @@ export default function DiscoverDishes() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-
 
         dispatch(setPrompt(prompt))
         dispatch(setIngredients(values))
@@ -197,9 +198,21 @@ export default function DiscoverDishes() {
                                 value={values.FreeFlow}
                                 handleChange={handleChange}
                                 isDishePages={isDishePages} title="Free Flow" placeholder="Cook-E! Please find me something for breakfast that has bacon ..." />
-                        </div>  <div>
+                        </div>
+                        <div>
                             {/* Button 1 */}
-                            <div className='flex justify-end items-end '>
+                            <div className='flex justify-between '>
+                                <button
+                                    type='reset'
+                                    onClick={() => setValues(initialState)}
+                                    className={`
+                                 hover:animate-pulse
+                              font-bold md:w-48 w-full mx-[5%] flex justify-center items-center
+                              border-2 border-gray-50 rounded-md
+                             text-white  transition duration-150 ease-in-out  md:mt-5
+                                `}>
+                                    Clear
+                                </button>
                                 <button
                                     type="submit"
                                     // onClick={() => isDishePages ? navigate('/get-dishes') : navigate('/dishe-details')}

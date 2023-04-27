@@ -86,11 +86,11 @@ function DisheSingle() {
               </figure>
               {/* <h3 className="h3 mb-4 text-gray-200">Duck Confit with Garlic and Herbs: </h3> */}
 
-              <div className='bg-white cursor-pointer bg-opacity-20 text-white my-2 transition duration-150 hover:scale-105 p-2 rounded-2xl'>
+              <pre className='bg-white cursor-pointer bg-opacity-20 text-white my-2 transition duration-150 hover:scale-105 p-2 rounded-2xl'>
                 {/* This dish features tender and flavorful duck legs that are slow-cooked in their own fat, served with a side of garlic and herb mashed potatoes. Duck confit is a traditional French dish that is perfect for a hearty and satisfying meal. */}
 
                 {recipe1}
-              </div>
+              </pre>
               <h4 className="font-medium text-primary-600 mb-8">Ingredients  & Cooking Directions:</h4>
               <GenerateInstructions prompt={ingredientsAndInstructions} />
 

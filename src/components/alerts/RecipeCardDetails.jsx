@@ -40,8 +40,8 @@ export default function RecipeCardDetails({ isOpen, openModal, close, closeModal
                                             <div className='flex   justify-center items-center'>
                                                 <img className="mb-3  rounded-xl h-56" src={recipeCardData?.image} alt="Icon 03" />
                                             </div>
-                                            <div className="text-gray-100 mb-1  md:mb-3">
-                                                <p className=''> {recipeCardData?.description}</p>
+                                            <div className="text-gray-100 mb-1 h-60 overflow-y-scroll  md:mb-3">
+                                                <pre className=''> {recipeCardData?.description}</pre>
                                             </div>
                                         </div>
                                     </div>
