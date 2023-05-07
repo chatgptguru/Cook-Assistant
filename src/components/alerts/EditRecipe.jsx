@@ -58,8 +58,8 @@ export default function EditRecipe({ isOpen, closeModal, openModal, close, handl
                                             onChange={handleChangeL}
                                             className="form-select"
                                         >
-                                            <option value={lists[0]?.id} selected  >{lists[0]?.name}</option>
-                                            {lists.filter((item) => item.id != lists[0]?.id).map((itemValue, index) => {
+                                            <option value="0" selected  >Please choose a list</option>
+                                            {lists.map((itemValue, index) => {
                                                 return (
                                                     <option key={index} value={itemValue.id}>
                                                         {itemValue.name}

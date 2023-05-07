@@ -296,16 +296,29 @@ font-medium  flex items-center justify-center border border-transparent lg:px-14
                                                                     {listsData.map((list, idx) => {
                                                                         return <div
                                                                             key={idx}
-
                                                                             className={`lg:w-52 w-full
-                                                    md:mx-0 bg-clip-padding ${clickedListId === list.id ? "bg-primary-600" : "bg-opacity-25 bg-white"} 
-                                                 font-medium  flex items-start justify-between border border-transparent lg:px-4 py-2.5
-                                                  my-2 rounded-full text-gray-800  transition duration-150 ease-in-out`}
+                                                                          md:mx-0 bg-clip-padding ${clickedListId === list.id
+                                                                                    ? "bg-primary-600"
+                                                                                    : "bg-opacity-25 bg-white"
+                                                                                } 
+                                                                          font-medium  flex items-start justify-between cursor-pointer hover:bg-gray-200 border border-transparent lg:px-4 py-2.5
+                                                                          my-2 rounded-full text-gray-800  transition duration-150 ease-in-out`}
+                                                                            onClick={() => setCLickedListId(list.id)}
                                                                         >
-
-                                                                            <div className='cursor-pointer' onClick={() => setCLickedListId(list.id)}>{list.name}</div>
+                                                                            <div>{list.name}</div>
                                                                             <div onClick={() => deleteList(list.id)}>
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff4500" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                                <svg
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    class="icon icon-tabler icon-tabler-trash"
+                                                                                    width="20"
+                                                                                    height="20"
+                                                                                    viewBox="0 0 24 24"
+                                                                                    stroke-width="1.5"
+                                                                                    stroke="#ff4500"
+                                                                                    fill="none"
+                                                                                    stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                >
                                                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                                                     <line x1="4" y1="7" x2="20" y2="7" />
                                                                                     <line x1="10" y1="11" x2="10" y2="17" />
@@ -315,6 +328,7 @@ font-medium  flex items-center justify-center border border-transparent lg:px-14
                                                                                 </svg>
                                                                             </div>
                                                                         </div>
+
                                                                     })}
 
                                                                 </>

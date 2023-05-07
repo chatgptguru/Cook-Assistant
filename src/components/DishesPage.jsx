@@ -34,10 +34,15 @@ export default function DishesPage() {
               <div className="text-lg pb-20 text-gray-400">
 
 
-                <figure className="mb-8">
-                  {/* <figcaption className="text-sm text-center text-gray-500 mt-3">Photo by Helena Lopes on Unsplash</figcaption> */}
-                </figure>
 
+                <div onClick={() => navigate("/discover-dishes")} className="my-3 cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff9300" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <line x1="5" y1="12" x2="11" y2="18" />
+                    <line x1="5" y1="12" x2="11" y2="6" />
+                  </svg>
+                </div>
                 <p className="h4 mb-4 text-gray-200">
                   {prompt}
                 </p>
@@ -114,7 +119,7 @@ export default function DishesPage() {
 
           </div>
         </div>
-      </div>
+      </div >
     </section >
   );
 }

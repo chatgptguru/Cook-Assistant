@@ -29,7 +29,7 @@ export default function GenerateInstructions({ prompt }) {
 
     // import.meta.env.VITE_Open_AI_Key
     const configuration = new Configuration({
-        apiKey: "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",
+        apiKey: "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",
     });
 
     const openai = new OpenAIApi(configuration);
@@ -78,9 +78,9 @@ export default function GenerateInstructions({ prompt }) {
                 :
                 <>
 
-                    <p className="mb-8 text-gray-200 ">
+                    <pre className="mb-8 text-gray-200 ">
                         {instructions}
-                    </p>
+                    </pre>
                     {/* <div>
                         {substrings.map((substring, index) => {
                             const match = substring.match(/^(\d)-(.*)/);
