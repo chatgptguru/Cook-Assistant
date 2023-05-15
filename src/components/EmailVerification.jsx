@@ -38,9 +38,9 @@ export default function EmailVerification() {
     };
 
     return (
-        <div className=''>
+        <div className='mt-20 flex justify-center items-center'>
             {currentUser?.emailVerified === false &&
-                <div className='flex justify-between mx-20 my-10 rounded-lg bg-yellow-100 py-2 px-3 '>
+                <div className='flex flex-col w-[50%] justify-between mx-20 my-10 rounded-lg bg-yellow-100 py-2 px-3 '>
                     <div className='flex justify-center items-center'>
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-triangle" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff4500" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -54,12 +54,19 @@ export default function EmailVerification() {
                     <button
                         onClick={verify}
                         disabled={isClicked}
-                        className='font-medium text-orange-500'
+                        className='font-medium text-orange-500 my-4 '
                     >
                         Verify email
                     </button>
                 </div>
             }
+            {currentUser?.emailVerified === true && <div className='flex justify-between mx-20 my-10 rounded-lg bg-yellow-100 py-2 px-3 '>
+                <p>
+                    Email Verified
+                </p>
+
+
+            </div>}
         </div>
     )
 }

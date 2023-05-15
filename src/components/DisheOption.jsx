@@ -10,7 +10,7 @@ export default function DisheOption({ title, name, value, handleChange, placehol
             </div>
             <div className='flex-[65%] '>
                 <input name={name} value={value} type="text" placeholder={placeholder} onChange={handleChange}
-                    className="rounded-full text-start text-gray-600 bg-slate-300 pl-3 w-full py-2.5"
+                    className="rounded-full text-start  text-gray-900 placeholder-gray-400  bg-slate-100 pl-3 w-full py-2.5"
                 />
             </div>
         </div>

@@ -7,7 +7,6 @@ import playStore from '../images/playStore.png'
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom'
 import homeImageBackground from "../images/homeBackground.png"
-import GenerateRecipe from './open-ai/GenerateRecipe'
 
 export default function HeroHome() {
     const navigate = useNavigate()

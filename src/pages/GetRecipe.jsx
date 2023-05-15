@@ -1,5 +1,5 @@
 import React from 'react'
-import CBkDisheDetails from '../components/CBkDisheDetails'
+import RecipeDetails from '../components/RecipeDetails'
 import Header from '../components/Header'
 
 export default function GetRecipe() {
@@ -7,7 +7,7 @@ export default function GetRecipe() {
         <div className="flex flex-col     overflow-hidden bg-hero-pattern">
 
             <Header />
-            <CBkDisheDetails />
+            <RecipeDetails />
         </div>
     )
 }

@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import recipeA from '../images/recipeA.png'
 import recipeB from '../images/recipeB.png'
 import homeImageBackground from "../images/homeBackground.png"
 import recipeC from '../images/recipeC.png'
 import { useSelector } from 'react-redux';
-import GenerateRecipe from './open-ai/GenerateRecipe';
+import GenerateDishes from './open-ai/GenerateDishes';
 
 import { Scrollbars } from 'react-custom-scrollbars';
+import GenerateDishesTwo from './open-ai/GenerateDishesTwo';
 // import parse from 're'
 
 export default function DishesPage() {
 
   const navigate = useNavigate()
   const { prompt } = useSelector((state) => state.prompt)
+  const { promptTwo } = useSelector((state) => state.promptTwo)
+  const [isDishClicked, setIsDishClicked] = useState(false)
 
   return (
 
@@ -46,22 +49,9 @@ export default function DishesPage() {
                 <p className="h4 mb-4 text-gray-200">
                   {prompt}
                 </p>
-                <GenerateRecipe prompt={prompt} />
-                {/* <GenerateRecipe2 prompt={prompt} /> */}
-                {/* <GenerateRecipe prompt={prompt} />
-                <GenerateRecipe prompt={prompt} /> */}
-                {/* <div onClick={() => navigate('/dishe-details')} className='bg-white cursor-pointer bg-opacity-20 my-2 transition duration-150 hover:scale-105 p-2 rounded-2xl'>
-                  <h4 className="h5 text-gray-200 mb-4 font-bold">Dish 1. Pan-Seared Duck Breast with Red Wine Reduction: </h4>
-                  <p className="mb-8 text-gray-200">
-                    This dish features a succulent duck breast that is pan-seared to perfection, served with a rich and flavorful red wine reduction sauce. This dish is a classic French recipe that is perfect for a dinner party with gourmet foodie friends.
-                  </p>
+                <div className=''>
+                  <GenerateDishes prompt={`Please generate a title for this description ${prompt}`} />
                 </div>
-                <div onClick={() => navigate('/dishe-details')} className='bg-white cursor-pointer bg-opacity-20 transition duration-150 hover:scale-105 p-2 rounded-2xl'>
-                  <h4 className="h5 font-bold text-gray-200 mb-4 ">Dish 2. Duck Confit with Garlic and Herbs:  </h4>
-                  <p className="mb-8 text-gray-200">This dish features tender and flavorful duck legs that are slow-cooked in their own fat, served with a side of garlic and herb mashed potatoes. Duck confit is a traditional French dish that is perfect for a hearty and satisfying meal.
-                  </p>
-                </div> */}
-
 
               </div>
               <div className='fixed 

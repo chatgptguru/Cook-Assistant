@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
 import { useDispatch } from "react-redux";
 import { setImage } from "../../redux/image";
+import { PropagateLoader } from 'react-spinners'
 
 export default function GenerateImageRecipe({ prompt }) {
     // const [prompt, setPrompt] = useState("");
@@ -40,24 +41,10 @@ export default function GenerateImageRecipe({ prompt }) {
         <div className="app-main  flex flex-col justify-center items-center">
             {loading ? (
                 <>
-                    <h2>Generating..Please Wait..</h2>
-                    <div class="lds-ripple">
-                        <div></div>
-                        <div></div>
-                    </div>
+                    <PropagateLoader color="#ee6713" />
                 </>
             ) : (
                 <>
-                    {/* <h2>Generate an Image using Open AI API</h2> */}
-
-                    {/* <textarea
-                        className="app-input"
-                        placeholder={placeholder}
-                        onChange={(e) => setPrompt(e.target.value)}
-                        rows="10"
-                        cols="40"
-                    />
-                    <button onClick={generateImage}>Generate an Image</button> */}
                     {result.length > 0 ? (
                         <img className="result-image rounded-lg" src={result} alt="result" />
                     ) : (

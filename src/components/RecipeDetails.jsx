@@ -10,11 +10,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import GenerateInstructions from './open-ai/GenerateInstructions';
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { db, auth, firestoredDB } from "../config/firebase";
-import GenerateRecipe from './open-ai/GenerateRecipe';
+import GenerateRecipe from './open-ai/GenerateDishes';
 import { Configuration, OpenAIApi } from "openai";
 import { setRecipe1 } from '../redux/recipes';
 
-function CBkDisheDetails() {
+function RecipeDetails() {
 
   const navigate = useNavigate()
 
@@ -25,15 +25,17 @@ function CBkDisheDetails() {
   const { image } = useSelector((state) => state.image)
   const { prompt } = useSelector((state) => state.prompt)
   const { ingredients } = useSelector((state) => state.ingredients)
+  const { instructions } = useSelector((state) => state.instructions)
 
   const ingredientsAndInstructions = `Write a recipe based on these ingredients and instructions: \r\n 1-${ingredients.IncludedIngredients}`
 
-  // Add a new document in collection "cities"
+  // Add a new document in collection "recipes"
   const onSubmitRecipe = async () => {
     try {
       await addDoc(moviesCollectionRef, {
         userId: auth?.currentUser?.uid,
-        description: recipe1 || null,
+        title: recipe1,
+        description: instructions || null,
         ingredients: ingredients || null,
         imageUrl: image || null
 
@@ -48,23 +50,7 @@ function CBkDisheDetails() {
 
       });
     } catch (err) {
-      // console.error(err);
       console.log(err.message);
-      // err.message === "Network Error"
-      //   ? Swal({
-      //     icon: "warning",
-      //     title: "No internet connection. Please check your network",
-      //     showConfirmButton: false,
-      //     timer: 1500,
-      //   })
-      //   : err.message === "Request failed with status code 403"
-      //     ? Swal({
-      //       icon: "error",
-      //       title: "Password not correct",
-      //       showConfirmButton: false,
-      //       timer: 1500,
-      //     })
-      //     :
       Swal({
         icon: "info",
         title: err.message,
@@ -74,15 +60,9 @@ function CBkDisheDetails() {
     }
   };
 
-  // useEffect(() => {
-  //   onSubmitRecipe()
-  // }, [])
 
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState(
-    "Search Bears with Paint Brushes the Starry Night, painted by Vincent Van Gogh.."
-  );
 
 
   // import.meta.env.VITE_Open_AI_Key
@@ -94,23 +74,21 @@ function CBkDisheDetails() {
 
   const dispatch = useDispatch()
 
-  const text = "Write 3 dishes in the format : name of the dish with number and the discription of each dishe based on these ingredients : Ingredients:  Fritos, Chili, Shredded cheddar cheese, Sweet white or red onions, diced small Sour cream"
 
   const generateRecipe = async () => {
     setLoading(true)
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: prompt,
-      temperature: 0.3,
-      max_tokens: 120,
+      temperature: 0.89,
+      max_tokens: 400,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0
     });
-    // console.log(JSON.stringify(response.data.data))
-    // console.log(result)
+
     setLoading(false)
-    // setResult(response.data.choices)
+    setResult(response.data.choices[0].text)
     dispatch(setRecipe1(response.data.choices[0].text));
   };
 
@@ -132,56 +110,18 @@ function CBkDisheDetails() {
             <article>
 
               {/* Article content */}
-              <div className="text-lg pb-20   text-gray-400">
+              <div className="text-lg pb-20  bg-[#2a93dd40] px-4 py-4 rounded-xl h-screen overflow-y-scroll   text-gray-400">
 
                 <figure className=" flex justify-center">
-                  {/* <img className="  h-auto w-full" src={recipeB} alt="News inner" /> */}
                   <GenerateImageRecipe prompt={prompt} />
-                  {/* <figcaption className="text-sm text-center text-gray-500 mt-3">Photo by Helena Lopes on Unsplash</figcaption> */}
                 </figure>
-                {/* <h3 className="h3 mb-4 text-gray-200">Duck Confit with Garlic and Herbs: </h3> */}
-                <p className="mb-8 text-gray-200" >
-                  {/* This dish features tender and flavorful duck legs that are slow-cooked in their own fat, served with a side of garlic and herb mashed potatoes. Duck confit is a traditional French dish that is perfect for a hearty and satisfying meal. */}
-
-                  {/* <GenerateRecipe prompt={prompt} /> */}
-                  {loading ?
-                    <>
-                      <h2>Generating..Please Wait..</h2>
-                    </>
-                    :
-                    <>
-
-                      <div className='bg-white cursor-pointer bg-opacity-20 my-2 transition duration-150 hover:scale-105 p-2 rounded-2xl'>
-                        <h4 className="h5 text-gray-200 mb-4 font-bold"></h4>
-                        {/* <p className="mb-8 text-gray-200">
-                            {result.length > 0 && recipes}
-                        </p> */}
-                        <p className="mb-8 text-gray-200">
-                          {recipe1}
-                        </p>
-
-                      </div>
-
-
-                    </>
-                  }
-                </p>
-                <h4 className="font-medium text-primary-600 mb-8">Ingredients  & Cooking Directions:</h4>
-                <GenerateInstructions prompt={ingredientsAndInstructions} />
-                {/* <ul className="list-disc list-inside mb-8">
-                  <li>Aenean sed adipiscing diam donec adipiscing tristique.</li>
-                  <li>Urna nunc id cursus metus aliquam eleifend.</li>
-                  <li>Arcu dictum varius duis at consectetur lorem donec massa sapien.</li>
-                  <li>Sed risus ultricies tristique nulla aliquet.</li>
-                </ul>
-
-
-                <h4 className="h4 text-gray-200 mb-4">2. The quick brown fox jumped over the lazy dog.</h4>
-                <p className="mb-8">
-                  Sed risus ultricies tristique nulla aliquet morbi tristique senectus et netus et. Nibh nisl condimentum, id venenatis a condimentum vitae sapien.
-                </p> */}
-
-
+                <div className='my-4 text-white font-bold text-xl flex justify-start'><pre>
+                  {recipe1}
+                </pre>
+                </div>
+                <div className=''>
+                  <GenerateInstructions prompt={ingredientsAndInstructions} />
+                </div>
               </div>
 
 
@@ -238,4 +178,4 @@ function CBkDisheDetails() {
   );
 }
 
-export default CBkDisheDetails;
+export default RecipeDetails;

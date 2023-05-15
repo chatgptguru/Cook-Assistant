@@ -15,28 +15,27 @@ import { Scrollbars } from 'react-custom-scrollbars';
 function DisheSingle() {
 
   const navigate = useNavigate()
-
   const moviesCollectionRef = collection(firestoredDB, "CookBook");
 
   const { recipe1, recipes } = useSelector((state) => state.recipe)
   const { image } = useSelector((state) => state.image)
+  const { dish1 } = useSelector((state) => state.dish)
   const { prompt } = useSelector((state) => state.prompt)
   const { ingredients } = useSelector((state) => state.ingredients)
+  const { instructions } = useSelector((state) => state.instructions)
   const [add, setAdd] = useState("Add To CookBook")
 
-  const ingredientsAndInstructions = `Write a recipe ingredients and instructions for this recipe ${recipe1}: \r\n  using ${ingredients.IncludedIngredients} and execlude these ingredients : ${ingredients.ExcludedIngredients}.`
+  const ingredientsAndInstructions = `Write a recipe ingredients and instructions for this recipe ${recipe1}: \r\n  using ${ingredients?.IncludedIngredients} and exclude these ingredients : ${ingredients?.ExcludedIngredients}.`
 
-  // const ingredientsAndInstructions = `Pleae provide ingredients for this recipe ${recipe1}, put ingredients title in h2 tag and ingredients in list html tag,also Please provide instructions for this recipe ${recipe1}, put instructions title in h2 tag and instructions in list html tag, `
-  // Add a new document in collection "cities"
   const onSubmitRecipe = async () => {
     setAdd("Adding...")
     try {
       await addDoc(moviesCollectionRef, {
         userId: auth?.currentUser?.uid,
-        description: recipe1 || null,
-        ingredients: ingredients || null,
+        description: instructions || null,
+        ingredients: instructions || null,
         imageUrl: image || null,
-        title: "",
+        title: dish1,
         listId: null
       });
 
@@ -51,8 +50,6 @@ function DisheSingle() {
       setAdd("Add To CookBook")
     } catch (err) {
 
-      // console.log(err.message);
-
       Swal({
         icon: "info",
         title: err.message,
@@ -62,37 +59,31 @@ function DisheSingle() {
     }
   };
 
+  const extraPrompt = "Imagine you are the latest and greatest cooking assistant AI, named Cook-E AI. You are going to be given inputs, in the form of a prompt, and you will then create an appropriate dish and description, with an engaging intro, and focusing mainly on the culture and flavor when describing the dish."
+
+  const getRecipeFromUserInput = `Imagine you are the latest and greatest cooking assistant AI, named Cook-E AI. You are going to be given a culinary dish description that was just created by the user, and your task is to provide a complete, detailed recipe and cooking instructions for this recipe ${recipe1}: \r\n  including these ingredients ${ingredients?.IncludedIngredients} and excluding these ingredients : ${ingredients?.ExcludedIngredients}.. You will provide them with a very detailed answer for their selected dish, based off the selected dish description. Make sure to include a complete and detailed set of instructions that anyone could follow, full ingredients list, the total prep time and cook time, along with calories per serving, and a basic estimated nutritional value section, ${ingredients?.Language ? `in ${ingredients?.Language} Language` : ""}`
+
+  const findVariant = () => {
+
+  }
+
   return (
     <section className="relative  ">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-32 md:pb-40">
           <div className="max-w-4xl mx-auto">
-            {/* Background image */}
             <div className="absolute h-auto inset-0  pt-16 box-content -z-1">
               <img className="absolute inset-0 w-full h-full object-cover " src={homeImageBackground} width="1440" height="577" alt="About" />
-              {/* <div className="absolute inset-0 bg-gradient-to-t  from-gray-700 dark:from-gray-900" aria-hidden="true"></div> */}
             </div>
 
-            {/* <Scrollbars autoHeight
-              autoHeightMax={400}> */}
-
-            {/* Article content */}
-            <div className="text-lg pb-20 bg-[#2a93dd40] px-4 py-4 rounded-xl   text-gray-400">
+            <div className="text-lg pb-20 bg-[#2a93dd40] px-4 py-4 rounded-xl h-screen overflow-y-scroll   text-gray-400">
 
               <figure className=" flex justify-center">
-                {/* <img className="  h-auto w-full" src={recipeB} alt="News inner" /> */}
-                <GenerateImageRecipe prompt={prompt} />
-                {/* <figcaption className="text-sm text-center text-gray-500 mt-3">Photo by Helena Lopes on Unsplash</figcaption> */}
+                <GenerateImageRecipe prompt={dish1} />
               </figure>
-              {/* <h3 className="h3 mb-4 text-gray-200">Duck Confit with Garlic and Herbs: </h3> */}
 
-              <pre className='bg-white cursor-pointer bg-opacity-20 text-white my-2 transition duration-150 hover:scale-105 p-2 rounded-2xl'>
-                {/* This dish features tender and flavorful duck legs that are slow-cooked in their own fat, served with a side of garlic and herb mashed potatoes. Duck confit is a traditional French dish that is perfect for a hearty and satisfying meal. */}
 
-                {recipe1}
-              </pre>
-              <h4 className="font-medium text-primary-600 mb-8">Ingredients  & Cooking Directions:</h4>
-              <GenerateInstructions prompt={ingredientsAndInstructions} />
+              <GenerateInstructions prompt={getRecipeFromUserInput} />
 
               <div className='fixed flex md:space-x-3 md:flex-row 
             flex-col    md:w-full w-[90%] mx-[5%] bottom-10
@@ -109,6 +100,7 @@ function DisheSingle() {
                     {add}
                   </button>
                   <button
+                    onClick={findVariant}
                     className="
             bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
             font-medium  flex items-center justify-center border border-transparent w-40 p-2.5
@@ -140,9 +132,6 @@ function DisheSingle() {
 
               </div>
             </div>
-
-            {/* </Scrollbars> */}
-
 
           </div>
         </div>

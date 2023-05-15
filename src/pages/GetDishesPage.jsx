@@ -5,7 +5,7 @@ import homeImageBackground from "../images/homeBackground.png"
 
 export default function GetDishesPage() {
     return (
-        <div className="flex flex-col     overflow-hidden bg-hero-pattern">
+        <div className="flex flex-col overflow-hidden bg-hero-pattern">
 
             <Header />
             <DishesPage />

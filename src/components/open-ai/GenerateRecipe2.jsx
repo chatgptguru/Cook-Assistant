@@ -32,8 +32,8 @@ export default function GenerateRecipe2({ prompt }) {
         const response = await openai.createCompletion({
             model: "text-davinci-003",
             prompt: prompt,
-            temperature: 0.3,
-            max_tokens: 120,
+            temperature: 0.86,
+            max_tokens: 400,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0

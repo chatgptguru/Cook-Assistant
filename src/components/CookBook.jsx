@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import CookBookk from "../images/PersonalCookbook.png"
 import RecipeCard from './RecipeCard'
 import homeImageBackground from "../images/homeBackground.png"
-import { addDoc, collection, doc, setDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, getDocs, query, where, deleteDoc, updateDoc } from "firebase/firestore";
 import { db, auth, firestoredDB } from "../config/firebase";
 import { useDispatch, useSelector } from 'react-redux'
 import { setRecipes } from '../redux/search'
@@ -19,6 +19,7 @@ import Swal from 'sweetalert';
 import CustomModal from './alerts/CustomModal'
 import EditRecipe from './alerts/EditRecipe'
 import RecipeCardDetails from './alerts/RecipeCardDetails'
+import EditListModal from './alerts/EditListModal'
 export default function CookBook() {
     const navigate = useNavigate()
 
@@ -43,14 +44,9 @@ export default function CookBook() {
                 ...doc.data(),
                 id: doc.id,
             }));
-            // console.log("Hooooooo " + JSON.stringify(filteredData))
-            // filteredData.map((item) => {
-            //     console.log(item)
-            // })
+
             const userData = filteredData.filter((item) => item.userId === auth?.currentUser?.uid)
-            // console.log("erer :" + JSON.stringify(userData))
             setListsData(userData)
-            // dispatch(setRecipes(userData))
 
         } catch (err) {
             console.error(err);
@@ -98,16 +94,11 @@ export default function CookBook() {
         getCookBookList()
     }, [clickedListId])
 
-    // useEffect(() => {
-
-    //     const userData = clickedListId === null ? filteredData.filter((item) => item.userId === auth?.currentUser?.uid) : filteredData.filter((item) => item.userId === auth?.currentUser?.uid && item.listId === clickedListId)
-    //     setCookBookData(userData)
-    // }, [clickedListId])
 
     const { recipes } = useSelector((state) => state.search)
 
     useEffect(() => {
-        const searchedItem = recipes.filter((cook) => cook.description.includes(search))
+        const searchedItem = recipes?.filter((cook) => cook?.description?.includes(search))
         setCookBookData(searchedItem)
     }, [search]);
 
@@ -160,7 +151,6 @@ export default function CookBook() {
     function closeModal() {
         onSubmitList()
         setIsOpen(false)
-
     }
 
     function close() {
@@ -181,10 +171,6 @@ export default function CookBook() {
     function openModalR() {
         setIsOpenR(true)
     }
-
-    // useEffect(() => {
-    //     getCookBookList()
-    // }, [])
 
 
     const [listId, setList] = useState("")
@@ -220,7 +206,53 @@ export default function CookBook() {
         }
         setDeleting(false)
     }
-    // console.log(" clicked list id : " + clickedListId)
+
+
+    //Edit modal
+    const updateListName = async () => {
+        try {
+            const movieDoc = doc(firestoredDB, "Lists", clickedListId);
+            await updateDoc(movieDoc, { name: newListName });
+            getLists()
+            Swal({
+                icon: "success",
+                title: "List renamed successfully",
+                showConfirmButton: false,
+                timer: 5000,
+                confirmButtonColor: '#f0481a',
+
+            });
+        } catch (error) {
+            Swal({
+                icon: "info",
+                title: error.message,
+                showConfirmButton: false,
+                timer: 6000,
+            });
+        }
+
+        // getCookBoookData()
+    };
+
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+    function closeEditListModalAndSubmit() {
+        // onSubmitEditListName()
+        updateListName()
+        setIsEditModalOpen(false)
+    }
+
+    function closeEditListModal() {
+        setIsEditModalOpen(false)
+    }
+
+    function openEditListModal() {
+        setIsEditModalOpen(true)
+    }
+
+    const [newListName, setNewListName] = useState("")
+    const handleChangeEditListName = (e) => {
+        setNewListName(e.target.value);
+    };
 
     return (
         <section className="relative  min-h-screen  ">
@@ -290,7 +322,7 @@ font-medium  flex items-center justify-center border border-transparent lg:px-14
                                                     </button>
                                                     {
                                                         loading ? <p>Please wait ...</p> :
-                                                            listsData.length === 0 ? <p className='text-white text-center text-xl'>You have not lists</p> :
+                                                            listsData.length === 0 ? <p className='text-white text-center text-xl'>Not Lists</p> :
                                                                 <>
 
                                                                     {listsData.map((list, idx) => {
@@ -301,31 +333,43 @@ font-medium  flex items-center justify-center border border-transparent lg:px-14
                                                                                     ? "bg-primary-600"
                                                                                     : "bg-opacity-25 bg-white"
                                                                                 } 
-                                                                          font-medium  flex items-start justify-between cursor-pointer hover:bg-gray-200 border border-transparent lg:px-4 py-2.5
-                                                                          my-2 rounded-full text-gray-800  transition duration-150 ease-in-out`}
+                                                                          font-medium   flex items-start justify-between cursor-pointer hover:bg-gray-200 border border-transparent lg:px-4 py-2.5
+                                                                          my-2 rounded-full text-gray-800  transition duration-150 ease-in-out `}
                                                                             onClick={() => setCLickedListId(list.id)}
                                                                         >
-                                                                            <div>{list.name}</div>
-                                                                            <div onClick={() => deleteList(list.id)}>
-                                                                                <svg
-                                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                                    class="icon icon-tabler icon-tabler-trash"
-                                                                                    width="20"
-                                                                                    height="20"
-                                                                                    viewBox="0 0 24 24"
-                                                                                    stroke-width="1.5"
-                                                                                    stroke="#ff4500"
-                                                                                    fill="none"
-                                                                                    stroke-linecap="round"
-                                                                                    stroke-linejoin="round"
+                                                                            <div className=''>{list.name} </div>
+                                                                            <div className="flex mt-1 space-x-1">
+                                                                                <div onClick={() => deleteList(list.id)}>
+                                                                                    <svg
+                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                        class="icon icon-tabler icon-tabler-trash"
+                                                                                        width="16"
+                                                                                        height="16"
+                                                                                        viewBox="0 0 24 24"
+                                                                                        stroke-width="1.5"
+                                                                                        stroke="#ff1e00"
+                                                                                        fill="none"
+                                                                                        stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                    >
+                                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                                        <line x1="4" y1="7" x2="20" y2="7" />
+                                                                                        <line x1="10" y1="11" x2="10" y2="17" />
+                                                                                        <line x1="14" y1="11" x2="14" y2="17" />
+                                                                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                                                    </svg>
+                                                                                </div>
+                                                                                <div
+                                                                                    onClick={() => setIsEditModalOpen(true)}
                                                                                 >
-                                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                                    <line x1="4" y1="7" x2="20" y2="7" />
-                                                                                    <line x1="10" y1="11" x2="10" y2="17" />
-                                                                                    <line x1="14" y1="11" x2="14" y2="17" />
-                                                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                                                                </svg>
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fa6a10" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                                                        <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                                                        <path d="M16 5l3 3" />
+                                                                                    </svg>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
 
@@ -339,7 +383,7 @@ font-medium  flex items-center justify-center border border-transparent lg:px-14
                                             <div className='flex-[70%] lg:h-128 lg:overflow-y-scroll overflow-x-hidden px-4 py-4 '>
                                                 {
                                                     cookBookData.length === 0 ?
-                                                        <p className='text-white text-center text-xl'>Your CokBook is Empty</p> :
+                                                        <p className='text-white text-center text-xl'>Your Cookbook is Empty</p> :
                                                         <>
                                                             {cookBookData.map((recipe, idx) => {
                                                                 return <RecipeCard
@@ -370,6 +414,9 @@ font-medium  flex items-center justify-center border border-transparent lg:px-14
 
                         <CustomModal isOpen={isOpen} close={close} openModal={openModal} newList={newList}
                             handleChange={handleChange2} closeModal={closeModal} />
+                        <EditListModal isOpen={isEditModalOpen} close={closeEditListModal} openModal={openEditListModal} newList={newListName}
+                            handleChange={handleChangeEditListName} closeModal={closeEditListModalAndSubmit} />
+
                         <RecipeCardDetails isOpen={isOpenR} close={closeR} openModal={openModalR}
                             recipeCardData={recipeCard} closeModal={closeModalR} />
 

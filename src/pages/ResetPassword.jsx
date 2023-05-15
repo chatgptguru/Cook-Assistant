@@ -118,7 +118,7 @@ function ResetPassword() {
                       name="email"
                       value={values.email}
                       onChange={handleChange}
-                      className="form-input w-full text-gray-300"
+                      className="form-input w-full"
                       placeholder="you@email.com"
                       required
                     />

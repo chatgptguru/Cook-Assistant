@@ -6,10 +6,10 @@ import { setMessage } from "../../redux/message";
 import { setRecipe1, setRecipe2, setRecipe3, } from "../../redux/recipes";
 import { useNavigate } from "react-router-dom";
 import parse from 'html-react-parser'
+import { setDish1 } from "../../redux/dishes";
 
 
-
-export default function GenerateRecipe({ prompt }) {
+export default function GenerateDishesTwo({ prompt }) {
 
     const [result, setResult] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ export default function GenerateRecipe({ prompt }) {
         "Search Bears with Paint Brushes the Starry Night, painted by Vincent Van Gogh.."
     );
 
-    const { recipe1 } = useSelector((state) => state.recipe);
+    const { dish1 } = useSelector((state) => state.dish);
 
     // import.meta.env.VITE_Open_AI_Key
     const configuration = new Configuration({
@@ -36,8 +36,8 @@ export default function GenerateRecipe({ prompt }) {
         const response = await openai.createCompletion({
             model: "text-davinci-003",
             prompt: prompt,
-            temperature: 0.3,
-            max_tokens: 120,
+            temperature: 0.89,
+            max_tokens: 400,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0
@@ -46,7 +46,7 @@ export default function GenerateRecipe({ prompt }) {
         // console.log(result)
         setLoading(false)
         // setResult(response.data.choices)
-        dispatch(setRecipe1(response.data.choices[0].text));
+        dispatch(setDish1(response.data.choices[0].text));
     };
 
     useEffect(() => {
@@ -66,28 +66,13 @@ export default function GenerateRecipe({ prompt }) {
                 :
                 <>
 
-                    <div onClick={() => navigate("/dishe-details")} className='bg-white w-full cursor-pointer bg-opacity-20 my-2 transition duration-150 hover:scale-105 p-2 rounded-2xl'>
-                        <h4 className="h5 text-gray-200 mb-4 font-bold"></h4>
-                        {/* <p className="mb-8 text-gray-200">
-                            {result.length > 0 && recipes}
-                        </p> */}
-                        <pre className="mb-8 w-full text-gray-200">
-                            {recipe1}
-                        </pre>
-                        {/* <div>
-                            {substrings.map((substring, index) => {
-                                const match = substring.match(/^(\d)-(.*)/);
-                                if (match) {
-                                    return (
-                                        <p key={index}>
-                                            <strong>{match[1]}</strong> - {match[2]}
-                                        </p>
-                                    );
-                                } else {
-                                    return <p key={index}>{substring}</p>;
-                                }
-                            })}
-                        </div> */}
+                    <div onClick={() => navigate("/dishe-details")}
+                        className='bg-white w-full cursor-pointer bg-opacity-20 my-2 transition duration-150  p-2 rounded-2xl'
+                    >
+                        <div className="">
+                            <p className="mb-8 w-full text-gray-200 ">   {dish1}  </p>
+                        </div>
+
 
                     </div>
 

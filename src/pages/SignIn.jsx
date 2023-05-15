@@ -47,7 +47,7 @@ function SignIn() {
       console.log(user);
       dispatch(switchLoginStatus(true))
       dispatch(setUserData(user))
-      navigate('/discover-dishes')
+      navigate('/verify-email')
     } catch (err) {
       if (err.code === 'auth/invalid-email') {
         dispatch(setMessage('Invalid email ID'));

@@ -23,6 +23,8 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import { dishReducer } from "./dishes";
+import { promptTwoReducer } from "./promptTwo";
 
 const persistConfig = {
   key: "root",
@@ -35,11 +37,13 @@ const reducers = combineReducers({
   message: messageReducer,
   recipe:recipeReducer,
   prompt:promptReducer,
+  promptTwo:promptTwoReducer,
   ingredients:ingredientsReducer,
   image:imageReducer,
   instructions: instructionsReducer,
   search: searchReducer,
-  recipeCard: recipeCardReducer
+  recipeCard: recipeCardReducer,
+  dish:dishReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

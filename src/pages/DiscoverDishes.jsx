@@ -5,26 +5,29 @@ import title from "../images/title.png"
 import { motion } from 'framer-motion'
 import DisheOption from '../components/DisheOption'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import GenerateRecipe from '../components/open-ai/GenerateRecipe'
+import { useDispatch, useSelector } from 'react-redux'
+import GenerateRecipe from '../components/open-ai/GenerateDishes'
 import { setPrompt } from '../redux/prompt'
 import { setIngredients } from '../redux/ingredients'
 import ResetPassword from './ResetPassword'
 import EmailVerification from '../components/EmailVerification'
+import { setpromptTwo } from '../redux/promptTwo'
 
-const initialState = {
-    Culture: "",
-    IncludedIngredients: "",
-    ExcludedIngredients: "",
-    Description: "",
-    Occasion: "",
-    Language: "",
-    FreeFlow: ""
-};
 
 
 export default function DiscoverDishes() {
 
+    const { ingredients } = useSelector((state) => state.ingredients);
+
+    const initialState = {
+        Culture: ingredients?.Culture || "",
+        IncludedIngredients: ingredients?.IncludedIngredients || "",
+        ExcludedIngredients: ingredients?.ExcludedIngredients || "",
+        Description: ingredients?.Description || "",
+        Occasion: ingredients?.Occasion || "",
+        Language: ingredients?.Language || "",
+        FreeFlow: ingredients?.FreeFlow || ""
+    };
 
     const [values, setValues] = useState(initialState);
     const handleChange = (e) => {
@@ -42,15 +45,11 @@ export default function DiscoverDishes() {
         setDishesPage(!isDishePages)
     }
     const { Culture, IncludedIngredients, ExcludedIngredients, Description, Occasion, Language, FreeFlow } = values;
-    // const { Culture, IncludedIngredients, ExcludedIngredients, Description, Occasion, Language, FreeFlow } = values;
-    // let prompt = `Create a dishe with the following format: dish name, followed by a description : ${Description}
-    // \n\nEnsure that the occasion is ${Occasion} occasion and 
-    //  includes these ingredients :${IncludedIngredients}, excluding
-    //   these ingredients ${ExcludedIngredients}.\n\nAlso Ensure that the culture is ${Culture} culture.
-    //   Also ensure to include to include this free flow ${FreeFlow} for this ${Language} language 
-    //   `
 
-    let prompt = `Let's cook up something delicious! Please find me a ${Culture} recipe that  ${FreeFlow} includes the ingredients ${IncludedIngredients}, but does not contain ${ExcludedIngredients}. It should be ${Description} and be suit no able for ${Occasion}. Please write the recipe in ${Language}.`
+    let prompt = `Let's cook up something delicious! Please find me a ${Culture} dish that  ${FreeFlow}  ${IncludedIngredients ? `and  includes the ingredients ${IncludedIngredients}` : ""},  ${ExcludedIngredients ? `but does not contain ${ExcludedIngredients}` : ""}.  ${Description ? `It should be ${Description}` : ""}  ${Occasion ? `and be suit no able for ${Occasion}` : ""}  ${Language ? `Please write the dish in ${Language}` : ""}`
+
+    let promptTwo = `Let's prepare a delicious meal! Please suggest a dish from ${Culture} cuisine that ${FreeFlow} ${IncludedIngredients ? `contains ${IncludedIngredients}` : ""}, ${ExcludedIngredients ? `but does not include ${ExcludedIngredients}` : ""}, ${Description ? `and should be ${Description}` : ""}. Additionally, it should be appropriate for ${Occasion ? `and be suit no able for ${Occasion}` : ""} and if possible, please provide the name of the dish in ${Language ? `Please write the dish in ${Language}` : ""}.`
+
 
     // let prompt = `Generate a recipe with the following format: dish name wih h2 html tag, followed by a description, using h4 html tag of each dish based on the specified ingredients.\n\nEnsure that each recipe is suitable for a ${Occasion} and includes these ingredients :${IncludedIngredients} and excluding these ingredients ${ExcludedIngredients}. Provide a detailed description for each recipe, including step-by-step instructions and cooking tips to ensure that the dish turns out perfectly.\n\nIncorporate a unique language element that ties the recipe to the ${Culture} culture, making it authentic and culturally appropriate. Don't forget to include the following variables in each recipe:\n\n- Occasion: ${Occasion}\n- Excluded Ingredients: ${ExcludedIngredients}\n- Included Ingredients: ${IncludedIngredients}\n- Culture: ${Culture}\n- Language: ${Language}`
 
@@ -79,20 +78,11 @@ export default function DiscoverDishes() {
         e.preventDefault();
 
         dispatch(setPrompt(prompt))
+        dispatch(setpromptTwo(promptTwo))
         dispatch(setIngredients(values))
         isDishePages ? navigate('/get-dishes') : navigate('/get-recipe')
-        // console.log(JSON.stringify(values))
-
-        // dispatch(`Write 3 dishes in the format : name of the dish with number and the discription of each dishe based on these ingredients:  ${IncludedIngredients},also  ${}`)
-        // navigate('/discover-dishes')
-        // dispatch(`Write a recipe for a dish that is tied t culture and incorporates a unique language element. The recipe should include specific ingredients while excluding others, and be suitable for a particular occasion. Additionally, the recipe should be written following a detailed description, including step-by-step instructions and cooking tips.`)
-
-
-        // }>
 
     }
-
-
 
     return (
         <div className="flex flex-col  relative min-h-screen  overflow-hidden bg-hero-pattern">
@@ -120,7 +110,7 @@ export default function DiscoverDishes() {
 
                     className='lg:w-[55%] rounded-xl md:w-[90%] p-2  md:pt-6 py-2 space-y-3 pb-10 
                     bg-white shadow-xl  bg-clip-padding bg-opacity-25  
-                    '>  <EmailVerification />
+                    '>
                     {/* Header */}
                     <div className='flex mx-4 my-2 justify-center items-center'>
                         <img src={title} alt='title' />
@@ -215,14 +205,13 @@ export default function DiscoverDishes() {
                                 </button>
                                 <button
                                     type="submit"
-                                    // onClick={() => isDishePages ? navigate('/get-dishes') : navigate('/dishe-details')}
                                     className={`
                                 btn hover:animate-pulse
                             bg-gradient-to-r ${isDishePages ? "from-orange-100 to-orange-50" : "from-teal-500 to-primary-600"} font-bold md:w-48 w-full mx-[5%]
                             flex items-end justify-end border border-transparent rounded-md
                              text-white  transition duration-150 ease-in-out md:mt-5
                                 `}>
-                                    {isDishePages ? "Get Dishes" : "Ges Recipes"}
+                                    {isDishePages ? "Get Dishes" : "Get Recipe"}
                                 </button>
                             </div>
                         </div>

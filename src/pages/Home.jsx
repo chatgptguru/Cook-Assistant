@@ -2,7 +2,6 @@ import React from 'react'
 import Header from '../components/Header'
 import HeroHome from '../components/HeroHome'
 import GenerateImageRecipe from '../components/open-ai/GenerateImageRecipe'
-import GenerateRecipe from '../components/open-ai/GenerateRecipe'
 import homeImageBackground from "../images/homeBackground.png"
 
 
