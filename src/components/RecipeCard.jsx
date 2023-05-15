@@ -149,8 +149,7 @@ export default function RecipeCard({ handleChangeL, listValue, onClickRC, lists,
                 value={updatedTitle}
                 nameD="updatedDescription"
                 handleCHangeD={((e) => setUpdatedDescription(e.target.value))}
-                valueD={description}
-
+                valueD={updatedDescription}
                 close={close2}
                 closeModal={() => closeModal2(id)}
 

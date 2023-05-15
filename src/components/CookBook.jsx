@@ -102,7 +102,6 @@ export default function CookBook() {
         setCookBookData(searchedItem)
     }, [search]);
 
-
     const [newList, setNewList] = useState("")
     const handleChange2 = (e) => {
         setNewList(e.target.value);
@@ -206,7 +205,6 @@ export default function CookBook() {
         }
         setDeleting(false)
     }
-
 
     //Edit modal
     const updateListName = async () => {

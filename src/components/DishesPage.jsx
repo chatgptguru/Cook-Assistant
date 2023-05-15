@@ -4,19 +4,24 @@ import recipeA from '../images/recipeA.png'
 import recipeB from '../images/recipeB.png'
 import homeImageBackground from "../images/homeBackground.png"
 import recipeC from '../images/recipeC.png'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import GenerateDishes from './open-ai/GenerateDishes';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 import GenerateDishesTwo from './open-ai/GenerateDishesTwo';
+import { setPrompt } from '../redux/recipes';
 // import parse from 're'
 
 export default function DishesPage() {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch();
   const { prompt } = useSelector((state) => state.prompt)
   const { promptTwo } = useSelector((state) => state.promptTwo)
+  const { ingredients } = useSelector((state) => state.ingredients)
   const [isDishClicked, setIsDishClicked] = useState(false)
+
+  const promptForDish1 = `please provide a title for a recipe that \r\n  include these ingredients ${ingredients?.IncludedIngredients} and excluding these ingredients : ${ingredients?.ExcludedIngredients}.. You will provide them with a very detailed answer for their selected dish, based off the selected dish description. Make sure to include a complete and detailed set of instructions that anyone could follow, full ingredients list, the total prep time and cook time, along with calories per serving, and a basic estimated nutritional value section, ${ingredients?.Language ? `in ${ingredients?.Language} Language` : ""}`
 
   return (
 
@@ -60,7 +65,7 @@ export default function DishesPage() {
                   z-90 bottom-10 '>
                 <div className='flex justify-center items-center space-x-6 '>
                   <button
-                    onClick={() => navigate('/dishe-details')}
+                    onClick={() => dispatch(setPrompt(promptForDish1))}
                     className="bg-gradient-to-r from-orange-100 to-orange-50  md:mx-0 
             font-medium  border border-transparent w-40 p-2.5
              my-2 rounded text-white bg-teal-500 hover:bg-teal-400 transition duration-150 ease-in-out"
